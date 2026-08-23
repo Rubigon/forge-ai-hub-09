@@ -6,12 +6,13 @@ const usd = new Intl.NumberFormat("es-ES", { style: "currency", currency: "USD" 
 
 /** Calculadora de costes de APIs de IA. Los precios viven en src/data/model-prices.ts. */
 export function CostCalculator() {
-  const [modelId, setModelId] = useState(modelPrices[0].id);
+  const fallbackModel = modelPrices[0] as ModelPrice;
+  const [modelId, setModelId] = useState(fallbackModel.id);
   const [tokensIn, setTokensIn] = useState(1000);
   const [tokensOut, setTokensOut] = useState(500);
   const [requestsPerDay, setRequestsPerDay] = useState(100);
 
-  const model = modelPrices.find((m) => m.id === modelId) ?? modelPrices[0];
+  const model = modelPrices.find((m) => m.id === modelId) ?? fallbackModel;
 
   const { daily, monthly, yearly } = useMemo(() => {
     const daily = estimateCost(tokensIn, tokensOut, model, requestsPerDay);
