@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import { estimateCost, modelPrices, PRICE_DISCLAIMER } from "@/data/model-prices";
+import { estimateCost, modelPrices, PRICE_DISCLAIMER, type ModelPrice } from "@/data/model-prices";
 import { trackEvent } from "@/lib/analytics";
 
 const usd = new Intl.NumberFormat("es-ES", { style: "currency", currency: "USD" });
