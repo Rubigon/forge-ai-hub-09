@@ -9,15 +9,15 @@ import { breadcrumbJsonLd } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import type { CategorySlug, PricingModel } from "@/types";
 
-type DirectorySearch = { categoria?: CategorySlug; precio?: PricingModel };
+type DirectorySearch = { categoria?: CategorySlug | undefined; precio?: PricingModel | undefined };
 
 const categorySlugs = categories.map((c) => c.slug) as string[];
 const pricingValues: PricingModel[] = ["gratis", "freemium", "pago"];
 
 export const Route = createFileRoute("/directorio-ia")({
   validateSearch: (search: Record<string, unknown>): DirectorySearch => ({
-    categoria: categorySlugs.includes(String(search.categoria)) ? (search.categoria as CategorySlug) : undefined,
-    precio: pricingValues.includes(search.precio as PricingModel) ? (search.precio as PricingModel) : undefined,
+    categoria: categorySlugs.includes(String(search['categoria'])) ? (search['categoria'] as CategorySlug) : undefined,
+    precio: pricingValues.includes(search['precio'] as PricingModel) ? (search['precio'] as PricingModel) : undefined,
   }),
   head: () => ({
     meta: [

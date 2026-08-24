@@ -10,6 +10,15 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AutorRouteImport } from './routes/autor'
+import { Route as AvisoLegalRouteImport } from './routes/aviso-legal'
+import { Route as BuscarRouteImport } from './routes/buscar'
+import { Route as DirectorioIaRouteImport } from './routes/directorio-ia'
+import { Route as PoliticaCookiesRouteImport } from './routes/politica-cookies'
+import { Route as PoliticaPrivacidadRouteImport } from './routes/politica-privacidad'
+import { Route as RecomendadorRouteImport } from './routes/recomendador'
+import { Route as RecursosRouteImport } from './routes/recursos'
+import { Route as TerminosRouteImport } from './routes/terminos'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as ComparativasIndexRouteImport } from './routes/comparativas.index'
@@ -24,6 +33,51 @@ import { Route as TutorialesSlugRouteImport } from './routes/tutoriales.$slug'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AutorRoute = AutorRouteImport.update({
+  id: '/autor',
+  path: '/autor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AvisoLegalRoute = AvisoLegalRouteImport.update({
+  id: '/aviso-legal',
+  path: '/aviso-legal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuscarRoute = BuscarRouteImport.update({
+  id: '/buscar',
+  path: '/buscar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DirectorioIaRoute = DirectorioIaRouteImport.update({
+  id: '/directorio-ia',
+  path: '/directorio-ia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoliticaCookiesRoute = PoliticaCookiesRouteImport.update({
+  id: '/politica-cookies',
+  path: '/politica-cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoliticaPrivacidadRoute = PoliticaPrivacidadRouteImport.update({
+  id: '/politica-privacidad',
+  path: '/politica-privacidad',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecomendadorRoute = RecomendadorRouteImport.update({
+  id: '/recomendador',
+  path: '/recomendador',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecursosRoute = RecursosRouteImport.update({
+  id: '/recursos',
+  path: '/recursos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TerminosRoute = TerminosRouteImport.update({
+  id: '/terminos',
+  path: '/terminos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
@@ -79,6 +133,15 @@ const TutorialesSlugRoute = TutorialesSlugRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/autor': typeof AutorRoute
+  '/aviso-legal': typeof AvisoLegalRoute
+  '/buscar': typeof BuscarRoute
+  '/directorio-ia': typeof DirectorioIaRoute
+  '/politica-cookies': typeof PoliticaCookiesRoute
+  '/politica-privacidad': typeof PoliticaPrivacidadRoute
+  '/recomendador': typeof RecomendadorRoute
+  '/recursos': typeof RecursosRoute
+  '/terminos': typeof TerminosRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/comparativas/$slug': typeof ComparativasSlugRoute
   '/guias/$slug': typeof GuiasSlugRoute
@@ -92,6 +155,15 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/autor': typeof AutorRoute
+  '/aviso-legal': typeof AvisoLegalRoute
+  '/buscar': typeof BuscarRoute
+  '/directorio-ia': typeof DirectorioIaRoute
+  '/politica-cookies': typeof PoliticaCookiesRoute
+  '/politica-privacidad': typeof PoliticaPrivacidadRoute
+  '/recomendador': typeof RecomendadorRoute
+  '/recursos': typeof RecursosRoute
+  '/terminos': typeof TerminosRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/comparativas/$slug': typeof ComparativasSlugRoute
   '/guias/$slug': typeof GuiasSlugRoute
@@ -106,6 +178,15 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/autor': typeof AutorRoute
+  '/aviso-legal': typeof AvisoLegalRoute
+  '/buscar': typeof BuscarRoute
+  '/directorio-ia': typeof DirectorioIaRoute
+  '/politica-cookies': typeof PoliticaCookiesRoute
+  '/politica-privacidad': typeof PoliticaPrivacidadRoute
+  '/recomendador': typeof RecomendadorRoute
+  '/recursos': typeof RecursosRoute
+  '/terminos': typeof TerminosRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/comparativas/$slug': typeof ComparativasSlugRoute
   '/guias/$slug': typeof GuiasSlugRoute
@@ -121,6 +202,15 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/autor'
+    | '/aviso-legal'
+    | '/buscar'
+    | '/directorio-ia'
+    | '/politica-cookies'
+    | '/politica-privacidad'
+    | '/recomendador'
+    | '/recursos'
+    | '/terminos'
     | '/blog/$slug'
     | '/comparativas/$slug'
     | '/guias/$slug'
@@ -134,6 +224,15 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/autor'
+    | '/aviso-legal'
+    | '/buscar'
+    | '/directorio-ia'
+    | '/politica-cookies'
+    | '/politica-privacidad'
+    | '/recomendador'
+    | '/recursos'
+    | '/terminos'
     | '/blog/$slug'
     | '/comparativas/$slug'
     | '/guias/$slug'
@@ -147,6 +246,15 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/autor'
+    | '/aviso-legal'
+    | '/buscar'
+    | '/directorio-ia'
+    | '/politica-cookies'
+    | '/politica-privacidad'
+    | '/recomendador'
+    | '/recursos'
+    | '/terminos'
     | '/blog/$slug'
     | '/comparativas/$slug'
     | '/guias/$slug'
@@ -161,6 +269,15 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AutorRoute: typeof AutorRoute
+  AvisoLegalRoute: typeof AvisoLegalRoute
+  BuscarRoute: typeof BuscarRoute
+  DirectorioIaRoute: typeof DirectorioIaRoute
+  PoliticaCookiesRoute: typeof PoliticaCookiesRoute
+  PoliticaPrivacidadRoute: typeof PoliticaPrivacidadRoute
+  RecomendadorRoute: typeof RecomendadorRoute
+  RecursosRoute: typeof RecursosRoute
+  TerminosRoute: typeof TerminosRoute
   BlogSlugRoute: typeof BlogSlugRoute
   ComparativasSlugRoute: typeof ComparativasSlugRoute
   GuiasSlugRoute: typeof GuiasSlugRoute
@@ -180,6 +297,69 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/autor': {
+      id: '/autor'
+      path: '/autor'
+      fullPath: '/autor'
+      preLoaderRoute: typeof AutorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aviso-legal': {
+      id: '/aviso-legal'
+      path: '/aviso-legal'
+      fullPath: '/aviso-legal'
+      preLoaderRoute: typeof AvisoLegalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/buscar': {
+      id: '/buscar'
+      path: '/buscar'
+      fullPath: '/buscar'
+      preLoaderRoute: typeof BuscarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/directorio-ia': {
+      id: '/directorio-ia'
+      path: '/directorio-ia'
+      fullPath: '/directorio-ia'
+      preLoaderRoute: typeof DirectorioIaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politica-cookies': {
+      id: '/politica-cookies'
+      path: '/politica-cookies'
+      fullPath: '/politica-cookies'
+      preLoaderRoute: typeof PoliticaCookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politica-privacidad': {
+      id: '/politica-privacidad'
+      path: '/politica-privacidad'
+      fullPath: '/politica-privacidad'
+      preLoaderRoute: typeof PoliticaPrivacidadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recomendador': {
+      id: '/recomendador'
+      path: '/recomendador'
+      fullPath: '/recomendador'
+      preLoaderRoute: typeof RecomendadorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recursos': {
+      id: '/recursos'
+      path: '/recursos'
+      fullPath: '/recursos'
+      preLoaderRoute: typeof RecursosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terminos': {
+      id: '/terminos'
+      path: '/terminos'
+      fullPath: '/terminos'
+      preLoaderRoute: typeof TerminosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog/': {
@@ -257,6 +437,15 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AutorRoute: AutorRoute,
+  AvisoLegalRoute: AvisoLegalRoute,
+  BuscarRoute: BuscarRoute,
+  DirectorioIaRoute: DirectorioIaRoute,
+  PoliticaCookiesRoute: PoliticaCookiesRoute,
+  PoliticaPrivacidadRoute: PoliticaPrivacidadRoute,
+  RecomendadorRoute: RecomendadorRoute,
+  RecursosRoute: RecursosRoute,
+  TerminosRoute: TerminosRoute,
   BlogSlugRoute: BlogSlugRoute,
   ComparativasSlugRoute: ComparativasSlugRoute,
   GuiasSlugRoute: GuiasSlugRoute,

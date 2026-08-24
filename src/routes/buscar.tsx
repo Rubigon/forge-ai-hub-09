@@ -5,9 +5,8 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { AdSlot } from "@/components/AdSlot";
 
 export const Route = createFileRoute("/buscar")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    q: typeof search.q === "string" ? search.q : "",
-  }),
+  validateSearch: (search: Record<string, unknown>): { q?: string } =>
+    typeof search['q'] === "string" && search['q'] ? { q: search['q'] } : {},
   head: () => ({
     meta: [
       { title: "Buscar en AIForge: herramientas, comparativas y guías" },
@@ -28,7 +27,7 @@ export const Route = createFileRoute("/buscar")({
 });
 
 function Buscar() {
-  const { q } = Route.useSearch();
+  const { q = "" } = Route.useSearch();
   const navigate = Route.useNavigate();
   const results = useMemo(() => (q ? searchItems(q, buildSearchIndex(), 40) : []), [q]);
 
