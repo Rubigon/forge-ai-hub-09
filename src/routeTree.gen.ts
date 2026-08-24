@@ -10,33 +10,297 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AutorRouteImport } from './routes/autor'
+import { Route as AvisoLegalRouteImport } from './routes/aviso-legal'
+import { Route as BuscarRouteImport } from './routes/buscar'
+import { Route as DirectorioIaRouteImport } from './routes/directorio-ia'
+import { Route as PoliticaCookiesRouteImport } from './routes/politica-cookies'
+import { Route as PoliticaPrivacidadRouteImport } from './routes/politica-privacidad'
+import { Route as RecomendadorRouteImport } from './routes/recomendador'
+import { Route as RecursosRouteImport } from './routes/recursos'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as TerminosRouteImport } from './routes/terminos'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as ComparativasIndexRouteImport } from './routes/comparativas.index'
+import { Route as ComparativasSlugRouteImport } from './routes/comparativas.$slug'
+import { Route as GuiasIndexRouteImport } from './routes/guias.index'
+import { Route as GuiasSlugRouteImport } from './routes/guias.$slug'
+import { Route as HerramientasIndexRouteImport } from './routes/herramientas.index'
+import { Route as HerramientasSlugRouteImport } from './routes/herramientas.$slug'
+import { Route as TutorialesIndexRouteImport } from './routes/tutoriales.index'
+import { Route as TutorialesSlugRouteImport } from './routes/tutoriales.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AutorRoute = AutorRouteImport.update({
+  id: '/autor',
+  path: '/autor',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AvisoLegalRoute = AvisoLegalRouteImport.update({
+  id: '/aviso-legal',
+  path: '/aviso-legal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BuscarRoute = BuscarRouteImport.update({
+  id: '/buscar',
+  path: '/buscar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DirectorioIaRoute = DirectorioIaRouteImport.update({
+  id: '/directorio-ia',
+  path: '/directorio-ia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoliticaCookiesRoute = PoliticaCookiesRouteImport.update({
+  id: '/politica-cookies',
+  path: '/politica-cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoliticaPrivacidadRoute = PoliticaPrivacidadRouteImport.update({
+  id: '/politica-privacidad',
+  path: '/politica-privacidad',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecomendadorRoute = RecomendadorRouteImport.update({
+  id: '/recomendador',
+  path: '/recomendador',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecursosRoute = RecursosRouteImport.update({
+  id: '/recursos',
+  path: '/recursos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TerminosRoute = TerminosRouteImport.update({
+  id: '/terminos',
+  path: '/terminos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComparativasIndexRoute = ComparativasIndexRouteImport.update({
+  id: '/comparativas/',
+  path: '/comparativas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComparativasSlugRoute = ComparativasSlugRouteImport.update({
+  id: '/comparativas/$slug',
+  path: '/comparativas/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuiasIndexRoute = GuiasIndexRouteImport.update({
+  id: '/guias/',
+  path: '/guias/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuiasSlugRoute = GuiasSlugRouteImport.update({
+  id: '/guias/$slug',
+  path: '/guias/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HerramientasIndexRoute = HerramientasIndexRouteImport.update({
+  id: '/herramientas/',
+  path: '/herramientas/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HerramientasSlugRoute = HerramientasSlugRouteImport.update({
+  id: '/herramientas/$slug',
+  path: '/herramientas/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TutorialesIndexRoute = TutorialesIndexRouteImport.update({
+  id: '/tutoriales/',
+  path: '/tutoriales/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TutorialesSlugRoute = TutorialesSlugRouteImport.update({
+  id: '/tutoriales/$slug',
+  path: '/tutoriales/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/autor': typeof AutorRoute
+  '/aviso-legal': typeof AvisoLegalRoute
+  '/buscar': typeof BuscarRoute
+  '/directorio-ia': typeof DirectorioIaRoute
+  '/politica-cookies': typeof PoliticaCookiesRoute
+  '/politica-privacidad': typeof PoliticaPrivacidadRoute
+  '/recomendador': typeof RecomendadorRoute
+  '/recursos': typeof RecursosRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terminos': typeof TerminosRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/comparativas/$slug': typeof ComparativasSlugRoute
+  '/guias/$slug': typeof GuiasSlugRoute
+  '/herramientas/$slug': typeof HerramientasSlugRoute
+  '/tutoriales/$slug': typeof TutorialesSlugRoute
+  '/blog/': typeof BlogIndexRoute
+  '/comparativas/': typeof ComparativasIndexRoute
+  '/guias/': typeof GuiasIndexRoute
+  '/herramientas/': typeof HerramientasIndexRoute
+  '/tutoriales/': typeof TutorialesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/autor': typeof AutorRoute
+  '/aviso-legal': typeof AvisoLegalRoute
+  '/buscar': typeof BuscarRoute
+  '/directorio-ia': typeof DirectorioIaRoute
+  '/politica-cookies': typeof PoliticaCookiesRoute
+  '/politica-privacidad': typeof PoliticaPrivacidadRoute
+  '/recomendador': typeof RecomendadorRoute
+  '/recursos': typeof RecursosRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terminos': typeof TerminosRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/comparativas/$slug': typeof ComparativasSlugRoute
+  '/guias/$slug': typeof GuiasSlugRoute
+  '/herramientas/$slug': typeof HerramientasSlugRoute
+  '/tutoriales/$slug': typeof TutorialesSlugRoute
+  '/blog': typeof BlogIndexRoute
+  '/comparativas': typeof ComparativasIndexRoute
+  '/guias': typeof GuiasIndexRoute
+  '/herramientas': typeof HerramientasIndexRoute
+  '/tutoriales': typeof TutorialesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/autor': typeof AutorRoute
+  '/aviso-legal': typeof AvisoLegalRoute
+  '/buscar': typeof BuscarRoute
+  '/directorio-ia': typeof DirectorioIaRoute
+  '/politica-cookies': typeof PoliticaCookiesRoute
+  '/politica-privacidad': typeof PoliticaPrivacidadRoute
+  '/recomendador': typeof RecomendadorRoute
+  '/recursos': typeof RecursosRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/terminos': typeof TerminosRoute
+  '/blog/$slug': typeof BlogSlugRoute
+  '/comparativas/$slug': typeof ComparativasSlugRoute
+  '/guias/$slug': typeof GuiasSlugRoute
+  '/herramientas/$slug': typeof HerramientasSlugRoute
+  '/tutoriales/$slug': typeof TutorialesSlugRoute
+  '/blog/': typeof BlogIndexRoute
+  '/comparativas/': typeof ComparativasIndexRoute
+  '/guias/': typeof GuiasIndexRoute
+  '/herramientas/': typeof HerramientasIndexRoute
+  '/tutoriales/': typeof TutorialesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/autor'
+    | '/aviso-legal'
+    | '/buscar'
+    | '/directorio-ia'
+    | '/politica-cookies'
+    | '/politica-privacidad'
+    | '/recomendador'
+    | '/recursos'
+    | '/sitemap.xml'
+    | '/terminos'
+    | '/blog/$slug'
+    | '/comparativas/$slug'
+    | '/guias/$slug'
+    | '/herramientas/$slug'
+    | '/tutoriales/$slug'
+    | '/blog/'
+    | '/comparativas/'
+    | '/guias/'
+    | '/herramientas/'
+    | '/tutoriales/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/autor'
+    | '/aviso-legal'
+    | '/buscar'
+    | '/directorio-ia'
+    | '/politica-cookies'
+    | '/politica-privacidad'
+    | '/recomendador'
+    | '/recursos'
+    | '/sitemap.xml'
+    | '/terminos'
+    | '/blog/$slug'
+    | '/comparativas/$slug'
+    | '/guias/$slug'
+    | '/herramientas/$slug'
+    | '/tutoriales/$slug'
+    | '/blog'
+    | '/comparativas'
+    | '/guias'
+    | '/herramientas'
+    | '/tutoriales'
+  id:
+    | '__root__'
+    | '/'
+    | '/autor'
+    | '/aviso-legal'
+    | '/buscar'
+    | '/directorio-ia'
+    | '/politica-cookies'
+    | '/politica-privacidad'
+    | '/recomendador'
+    | '/recursos'
+    | '/sitemap.xml'
+    | '/terminos'
+    | '/blog/$slug'
+    | '/comparativas/$slug'
+    | '/guias/$slug'
+    | '/herramientas/$slug'
+    | '/tutoriales/$slug'
+    | '/blog/'
+    | '/comparativas/'
+    | '/guias/'
+    | '/herramientas/'
+    | '/tutoriales/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AutorRoute: typeof AutorRoute
+  AvisoLegalRoute: typeof AvisoLegalRoute
+  BuscarRoute: typeof BuscarRoute
+  DirectorioIaRoute: typeof DirectorioIaRoute
+  PoliticaCookiesRoute: typeof PoliticaCookiesRoute
+  PoliticaPrivacidadRoute: typeof PoliticaPrivacidadRoute
+  RecomendadorRoute: typeof RecomendadorRoute
+  RecursosRoute: typeof RecursosRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TerminosRoute: typeof TerminosRoute
+  BlogSlugRoute: typeof BlogSlugRoute
+  ComparativasSlugRoute: typeof ComparativasSlugRoute
+  GuiasSlugRoute: typeof GuiasSlugRoute
+  HerramientasSlugRoute: typeof HerramientasSlugRoute
+  TutorialesSlugRoute: typeof TutorialesSlugRoute
+  BlogIndexRoute: typeof BlogIndexRoute
+  ComparativasIndexRoute: typeof ComparativasIndexRoute
+  GuiasIndexRoute: typeof GuiasIndexRoute
+  HerramientasIndexRoute: typeof HerramientasIndexRoute
+  TutorialesIndexRoute: typeof TutorialesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +312,171 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/autor': {
+      id: '/autor'
+      path: '/autor'
+      fullPath: '/autor'
+      preLoaderRoute: typeof AutorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/aviso-legal': {
+      id: '/aviso-legal'
+      path: '/aviso-legal'
+      fullPath: '/aviso-legal'
+      preLoaderRoute: typeof AvisoLegalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/buscar': {
+      id: '/buscar'
+      path: '/buscar'
+      fullPath: '/buscar'
+      preLoaderRoute: typeof BuscarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/directorio-ia': {
+      id: '/directorio-ia'
+      path: '/directorio-ia'
+      fullPath: '/directorio-ia'
+      preLoaderRoute: typeof DirectorioIaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politica-cookies': {
+      id: '/politica-cookies'
+      path: '/politica-cookies'
+      fullPath: '/politica-cookies'
+      preLoaderRoute: typeof PoliticaCookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politica-privacidad': {
+      id: '/politica-privacidad'
+      path: '/politica-privacidad'
+      fullPath: '/politica-privacidad'
+      preLoaderRoute: typeof PoliticaPrivacidadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recomendador': {
+      id: '/recomendador'
+      path: '/recomendador'
+      fullPath: '/recomendador'
+      preLoaderRoute: typeof RecomendadorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recursos': {
+      id: '/recursos'
+      path: '/recursos'
+      fullPath: '/recursos'
+      preLoaderRoute: typeof RecursosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terminos': {
+      id: '/terminos'
+      path: '/terminos'
+      fullPath: '/terminos'
+      preLoaderRoute: typeof TerminosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comparativas/': {
+      id: '/comparativas/'
+      path: '/comparativas'
+      fullPath: '/comparativas/'
+      preLoaderRoute: typeof ComparativasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/comparativas/$slug': {
+      id: '/comparativas/$slug'
+      path: '/comparativas/$slug'
+      fullPath: '/comparativas/$slug'
+      preLoaderRoute: typeof ComparativasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guias/': {
+      id: '/guias/'
+      path: '/guias'
+      fullPath: '/guias/'
+      preLoaderRoute: typeof GuiasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guias/$slug': {
+      id: '/guias/$slug'
+      path: '/guias/$slug'
+      fullPath: '/guias/$slug'
+      preLoaderRoute: typeof GuiasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/herramientas/': {
+      id: '/herramientas/'
+      path: '/herramientas'
+      fullPath: '/herramientas/'
+      preLoaderRoute: typeof HerramientasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/herramientas/$slug': {
+      id: '/herramientas/$slug'
+      path: '/herramientas/$slug'
+      fullPath: '/herramientas/$slug'
+      preLoaderRoute: typeof HerramientasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tutoriales/': {
+      id: '/tutoriales/'
+      path: '/tutoriales'
+      fullPath: '/tutoriales/'
+      preLoaderRoute: typeof TutorialesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tutoriales/$slug': {
+      id: '/tutoriales/$slug'
+      path: '/tutoriales/$slug'
+      fullPath: '/tutoriales/$slug'
+      preLoaderRoute: typeof TutorialesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AutorRoute: AutorRoute,
+  AvisoLegalRoute: AvisoLegalRoute,
+  BuscarRoute: BuscarRoute,
+  DirectorioIaRoute: DirectorioIaRoute,
+  PoliticaCookiesRoute: PoliticaCookiesRoute,
+  PoliticaPrivacidadRoute: PoliticaPrivacidadRoute,
+  RecomendadorRoute: RecomendadorRoute,
+  RecursosRoute: RecursosRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TerminosRoute: TerminosRoute,
+  BlogSlugRoute: BlogSlugRoute,
+  ComparativasSlugRoute: ComparativasSlugRoute,
+  GuiasSlugRoute: GuiasSlugRoute,
+  HerramientasSlugRoute: HerramientasSlugRoute,
+  TutorialesSlugRoute: TutorialesSlugRoute,
+  BlogIndexRoute: BlogIndexRoute,
+  ComparativasIndexRoute: ComparativasIndexRoute,
+  GuiasIndexRoute: GuiasIndexRoute,
+  HerramientasIndexRoute: HerramientasIndexRoute,
+  TutorialesIndexRoute: TutorialesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

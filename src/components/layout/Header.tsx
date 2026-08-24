@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, Moon, Search, Sun, X } from "lucide-react";
 import { mainNav, site } from "@/config/site";
@@ -7,7 +7,6 @@ import { useTheme } from "@/lib/theme";
 export function Header() {
   const [open, setOpen] = useState(false);
   const { theme, toggle } = useTheme();
-  const navigate = useNavigate();
 
   const openSearch = () =>
     window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }));
@@ -106,10 +105,6 @@ export function Header() {
           </ul>
         </nav>
       )}
-      {/* acceso directo de búsqueda para lectores de pantalla */}
-      <button className="sr-only" onClick={() => navigate({ to: "/buscar" })} tabIndex={-1} aria-hidden>
-        Ir a búsqueda
-      </button>
     </header>
   );
 }

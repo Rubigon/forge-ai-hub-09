@@ -420,10 +420,10 @@ export const articleBySlug = (slug: string) => articles.find((a) => a.slug === s
 export const articlesByType = (type: Article["type"]) => articles.filter((a) => a.type === type);
 export const featuredArticles = articles.filter((a) => a.featured);
 
-export const articleBasePath: Record<Article["type"], string> = {
+export const articleBasePath = {
   blog: "/blog",
   guia: "/guias",
   tutorial: "/tutoriales",
-};
+} as const satisfies Record<Article["type"], string>;
 
 export const articleUrl = (a: Article) => `${articleBasePath[a.type]}/${a.slug}`;
