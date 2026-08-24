@@ -106,10 +106,6 @@ export function Header() {
           </ul>
         </nav>
       )}
-      {/* acceso directo de búsqueda para lectores de pantalla */}
-      <button className="sr-only" onClick={() => navigate({ to: "/buscar" })} tabIndex={-1} aria-hidden>
-        Ir a búsqueda
-      </button>
     </header>
   );
 }
