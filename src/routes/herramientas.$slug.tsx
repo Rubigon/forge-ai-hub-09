@@ -18,12 +18,12 @@ import { TextAnalyzer } from "@/components/apps/TextAnalyzer";
 import type { Tool } from "@/types";
 
 const appComponents: Record<string, () => React.JSX.Element> = {
-  "optimizador-de-prompts": PromptOptimizer,
+  "optimizador-prompts": PromptOptimizer,
   "calculadora-costes-ia": CostCalculator,
-  "contador-de-tokens": TokenCalculator,
+  "calculadora-tokens": TokenCalculator,
   "formateador-json": JsonFormatter,
   "probador-regex": RegexTester,
-  "analizador-de-texto": TextAnalyzer,
+  "analizador-texto": TextAnalyzer,
 };
 
 export const Route = createFileRoute("/herramientas/$slug")({
