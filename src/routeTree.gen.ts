@@ -18,6 +18,7 @@ import { Route as PoliticaCookiesRouteImport } from './routes/politica-cookies'
 import { Route as PoliticaPrivacidadRouteImport } from './routes/politica-privacidad'
 import { Route as RecomendadorRouteImport } from './routes/recomendador'
 import { Route as RecursosRouteImport } from './routes/recursos'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as TerminosRouteImport } from './routes/terminos'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
@@ -73,6 +74,11 @@ const RecomendadorRoute = RecomendadorRouteImport.update({
 const RecursosRoute = RecursosRouteImport.update({
   id: '/recursos',
   path: '/recursos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TerminosRoute = TerminosRouteImport.update({
@@ -141,6 +147,7 @@ export interface FileRoutesByFullPath {
   '/politica-privacidad': typeof PoliticaPrivacidadRoute
   '/recomendador': typeof RecomendadorRoute
   '/recursos': typeof RecursosRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terminos': typeof TerminosRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/comparativas/$slug': typeof ComparativasSlugRoute
@@ -163,6 +170,7 @@ export interface FileRoutesByTo {
   '/politica-privacidad': typeof PoliticaPrivacidadRoute
   '/recomendador': typeof RecomendadorRoute
   '/recursos': typeof RecursosRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terminos': typeof TerminosRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/comparativas/$slug': typeof ComparativasSlugRoute
@@ -186,6 +194,7 @@ export interface FileRoutesById {
   '/politica-privacidad': typeof PoliticaPrivacidadRoute
   '/recomendador': typeof RecomendadorRoute
   '/recursos': typeof RecursosRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terminos': typeof TerminosRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/comparativas/$slug': typeof ComparativasSlugRoute
@@ -210,6 +219,7 @@ export interface FileRouteTypes {
     | '/politica-privacidad'
     | '/recomendador'
     | '/recursos'
+    | '/sitemap.xml'
     | '/terminos'
     | '/blog/$slug'
     | '/comparativas/$slug'
@@ -232,6 +242,7 @@ export interface FileRouteTypes {
     | '/politica-privacidad'
     | '/recomendador'
     | '/recursos'
+    | '/sitemap.xml'
     | '/terminos'
     | '/blog/$slug'
     | '/comparativas/$slug'
@@ -254,6 +265,7 @@ export interface FileRouteTypes {
     | '/politica-privacidad'
     | '/recomendador'
     | '/recursos'
+    | '/sitemap.xml'
     | '/terminos'
     | '/blog/$slug'
     | '/comparativas/$slug'
@@ -277,6 +289,7 @@ export interface RootRouteChildren {
   PoliticaPrivacidadRoute: typeof PoliticaPrivacidadRoute
   RecomendadorRoute: typeof RecomendadorRoute
   RecursosRoute: typeof RecursosRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TerminosRoute: typeof TerminosRoute
   BlogSlugRoute: typeof BlogSlugRoute
   ComparativasSlugRoute: typeof ComparativasSlugRoute
@@ -353,6 +366,13 @@ declare module '@tanstack/react-router' {
       path: '/recursos'
       fullPath: '/recursos'
       preLoaderRoute: typeof RecursosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terminos': {
@@ -445,6 +465,7 @@ const rootRouteChildren: RootRouteChildren = {
   PoliticaPrivacidadRoute: PoliticaPrivacidadRoute,
   RecomendadorRoute: RecomendadorRoute,
   RecursosRoute: RecursosRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TerminosRoute: TerminosRoute,
   BlogSlugRoute: BlogSlugRoute,
   ComparativasSlugRoute: ComparativasSlugRoute,
