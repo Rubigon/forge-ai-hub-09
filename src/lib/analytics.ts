@@ -14,7 +14,8 @@ export type AnalyticsEvent =
   | "calculator_used"
   | "recommendation_completed"
   | "external_tool_click"
-  | "newsletter_signup";
+  | "newsletter_signup"
+  | "contact_submit";
 
 const CONSENT_KEY = "aiforge-consent";
 

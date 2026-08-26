@@ -13,9 +13,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AutorRouteImport } from './routes/autor'
 import { Route as AvisoLegalRouteImport } from './routes/aviso-legal'
 import { Route as BuscarRouteImport } from './routes/buscar'
+import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as DirectorioIaRouteImport } from './routes/directorio-ia'
+import { Route as NosotrosRouteImport } from './routes/nosotros'
 import { Route as PoliticaCookiesRouteImport } from './routes/politica-cookies'
 import { Route as PoliticaPrivacidadRouteImport } from './routes/politica-privacidad'
+import { Route as PreciosRouteImport } from './routes/precios'
 import { Route as RecomendadorRouteImport } from './routes/recomendador'
 import { Route as RecursosRouteImport } from './routes/recursos'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
@@ -51,9 +54,19 @@ const BuscarRoute = BuscarRouteImport.update({
   path: '/buscar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContactoRoute = ContactoRouteImport.update({
+  id: '/contacto',
+  path: '/contacto',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DirectorioIaRoute = DirectorioIaRouteImport.update({
   id: '/directorio-ia',
   path: '/directorio-ia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NosotrosRoute = NosotrosRouteImport.update({
+  id: '/nosotros',
+  path: '/nosotros',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PoliticaCookiesRoute = PoliticaCookiesRouteImport.update({
@@ -64,6 +77,11 @@ const PoliticaCookiesRoute = PoliticaCookiesRouteImport.update({
 const PoliticaPrivacidadRoute = PoliticaPrivacidadRouteImport.update({
   id: '/politica-privacidad',
   path: '/politica-privacidad',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PreciosRoute = PreciosRouteImport.update({
+  id: '/precios',
+  path: '/precios',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RecomendadorRoute = RecomendadorRouteImport.update({
@@ -142,9 +160,12 @@ export interface FileRoutesByFullPath {
   '/autor': typeof AutorRoute
   '/aviso-legal': typeof AvisoLegalRoute
   '/buscar': typeof BuscarRoute
+  '/contacto': typeof ContactoRoute
   '/directorio-ia': typeof DirectorioIaRoute
+  '/nosotros': typeof NosotrosRoute
   '/politica-cookies': typeof PoliticaCookiesRoute
   '/politica-privacidad': typeof PoliticaPrivacidadRoute
+  '/precios': typeof PreciosRoute
   '/recomendador': typeof RecomendadorRoute
   '/recursos': typeof RecursosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -165,9 +186,12 @@ export interface FileRoutesByTo {
   '/autor': typeof AutorRoute
   '/aviso-legal': typeof AvisoLegalRoute
   '/buscar': typeof BuscarRoute
+  '/contacto': typeof ContactoRoute
   '/directorio-ia': typeof DirectorioIaRoute
+  '/nosotros': typeof NosotrosRoute
   '/politica-cookies': typeof PoliticaCookiesRoute
   '/politica-privacidad': typeof PoliticaPrivacidadRoute
+  '/precios': typeof PreciosRoute
   '/recomendador': typeof RecomendadorRoute
   '/recursos': typeof RecursosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -189,9 +213,12 @@ export interface FileRoutesById {
   '/autor': typeof AutorRoute
   '/aviso-legal': typeof AvisoLegalRoute
   '/buscar': typeof BuscarRoute
+  '/contacto': typeof ContactoRoute
   '/directorio-ia': typeof DirectorioIaRoute
+  '/nosotros': typeof NosotrosRoute
   '/politica-cookies': typeof PoliticaCookiesRoute
   '/politica-privacidad': typeof PoliticaPrivacidadRoute
+  '/precios': typeof PreciosRoute
   '/recomendador': typeof RecomendadorRoute
   '/recursos': typeof RecursosRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
@@ -214,9 +241,12 @@ export interface FileRouteTypes {
     | '/autor'
     | '/aviso-legal'
     | '/buscar'
+    | '/contacto'
     | '/directorio-ia'
+    | '/nosotros'
     | '/politica-cookies'
     | '/politica-privacidad'
+    | '/precios'
     | '/recomendador'
     | '/recursos'
     | '/sitemap.xml'
@@ -237,9 +267,12 @@ export interface FileRouteTypes {
     | '/autor'
     | '/aviso-legal'
     | '/buscar'
+    | '/contacto'
     | '/directorio-ia'
+    | '/nosotros'
     | '/politica-cookies'
     | '/politica-privacidad'
+    | '/precios'
     | '/recomendador'
     | '/recursos'
     | '/sitemap.xml'
@@ -260,9 +293,12 @@ export interface FileRouteTypes {
     | '/autor'
     | '/aviso-legal'
     | '/buscar'
+    | '/contacto'
     | '/directorio-ia'
+    | '/nosotros'
     | '/politica-cookies'
     | '/politica-privacidad'
+    | '/precios'
     | '/recomendador'
     | '/recursos'
     | '/sitemap.xml'
@@ -284,9 +320,12 @@ export interface RootRouteChildren {
   AutorRoute: typeof AutorRoute
   AvisoLegalRoute: typeof AvisoLegalRoute
   BuscarRoute: typeof BuscarRoute
+  ContactoRoute: typeof ContactoRoute
   DirectorioIaRoute: typeof DirectorioIaRoute
+  NosotrosRoute: typeof NosotrosRoute
   PoliticaCookiesRoute: typeof PoliticaCookiesRoute
   PoliticaPrivacidadRoute: typeof PoliticaPrivacidadRoute
+  PreciosRoute: typeof PreciosRoute
   RecomendadorRoute: typeof RecomendadorRoute
   RecursosRoute: typeof RecursosRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
@@ -333,11 +372,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BuscarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/contacto': {
+      id: '/contacto'
+      path: '/contacto'
+      fullPath: '/contacto'
+      preLoaderRoute: typeof ContactoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/directorio-ia': {
       id: '/directorio-ia'
       path: '/directorio-ia'
       fullPath: '/directorio-ia'
       preLoaderRoute: typeof DirectorioIaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nosotros': {
+      id: '/nosotros'
+      path: '/nosotros'
+      fullPath: '/nosotros'
+      preLoaderRoute: typeof NosotrosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/politica-cookies': {
@@ -352,6 +405,13 @@ declare module '@tanstack/react-router' {
       path: '/politica-privacidad'
       fullPath: '/politica-privacidad'
       preLoaderRoute: typeof PoliticaPrivacidadRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/precios': {
+      id: '/precios'
+      path: '/precios'
+      fullPath: '/precios'
+      preLoaderRoute: typeof PreciosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recomendador': {
@@ -460,9 +520,12 @@ const rootRouteChildren: RootRouteChildren = {
   AutorRoute: AutorRoute,
   AvisoLegalRoute: AvisoLegalRoute,
   BuscarRoute: BuscarRoute,
+  ContactoRoute: ContactoRoute,
   DirectorioIaRoute: DirectorioIaRoute,
+  NosotrosRoute: NosotrosRoute,
   PoliticaCookiesRoute: PoliticaCookiesRoute,
   PoliticaPrivacidadRoute: PoliticaPrivacidadRoute,
+  PreciosRoute: PreciosRoute,
   RecomendadorRoute: RecomendadorRoute,
   RecursosRoute: RecursosRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
