@@ -569,7 +569,7 @@ export const tools: Tool[] = [
     alternatives: ["figma-ai", "ideogram", "gamma"],
     lastReviewed: "2026-08-01",
     isPopular: true,
-    tasks: ["contenido", "diseñar"],
+    tasks: ["contenido", "imagenes"],
     levels: ["principiante", "intermedio"],
   },
   {
@@ -591,7 +591,7 @@ export const tools: Tool[] = [
     officialUrl: "https://www.figma.com",
     alternatives: ["canva-magic-studio", "v0", "lovable"],
     lastReviewed: "2026-07-20",
-    tasks: ["diseñar", "programar"],
+    tasks: ["web", "programar"],
     levels: ["intermedio", "avanzado"],
   },
   {
