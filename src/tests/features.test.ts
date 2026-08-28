@@ -51,10 +51,8 @@ describe("calculadora de costes", () => {
     const model = modelPrices[0]!;
     const one = estimateCost(1000, 1000, model, 1);
     const ten = estimateCost(1000, 1000, model, 10);
-    const totalOne = typeof one === "number" ? one : one.total;
-    const totalTen = typeof ten === "number" ? ten : ten.total;
-    expect(totalOne).toBeGreaterThan(0);
-    expect(totalTen).toBeCloseTo(totalOne * 10, 6);
+    expect(one).toBeGreaterThan(0);
+    expect(ten).toBeCloseTo(one * 10, 6);
   });
 
   it("todos los modelos tienen precios positivos", () => {

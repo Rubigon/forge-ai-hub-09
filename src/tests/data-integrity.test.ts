@@ -55,7 +55,8 @@ describe("integridad del catálogo", () => {
       expect(a.slug).toMatch(slugRe);
       expect(articleBySlug(a.slug)).toBeDefined();
       expect(articleUrl(a)).toMatch(/^\/(blog|guias|tutoriales)\//);
-      expect(a.sections.length).toBeGreaterThan(0);
+      expect(a.content.length).toBeGreaterThan(0);
+      expect(a.relatedTools.every((t) => typeof t === "string")).toBe(true);
     }
   });
 
