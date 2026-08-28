@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { categories } from "@/data/categories";
+import { categories, categoryBySlug } from "@/data/categories";
 import { pricingLabels, tools } from "@/data/tools";
 import { ToolCard } from "@/components/ToolCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -19,16 +19,23 @@ export const Route = createFileRoute("/directorio-ia")({
     categoria: categorySlugs.includes(String(search['categoria'])) ? (search['categoria'] as CategorySlug) : undefined,
     precio: pricingValues.includes(search['precio'] as PricingModel) ? (search['precio'] as PricingModel) : undefined,
   }),
-  head: () => ({
+  head: ({ match }) => {
+    const { categoria, precio } = match.search;
+    const catName = categoria ? categoryBySlug(categoria)?.name : undefined;
+    const priceName = precio ? pricingLabels[precio].toLowerCase() : undefined;
+    const suffix = [catName, priceName ? `precio ${priceName}` : undefined].filter(Boolean).join(", ");
+    const title = suffix
+      ? `Herramientas de IA: ${suffix} — AIForge`
+      : "Directorio de IA: todas las herramientas por categoría — AIForge";
+    const description = suffix
+      ? `Herramientas de inteligencia artificial filtradas por ${suffix}, con fichas técnicas, precios y alternativas.`
+      : "Directorio completo de herramientas de inteligencia artificial filtrable por categoría y modelo de precio, con fichas técnicas revisadas.";
+    return {
     meta: [
-      { title: "Directorio de IA: todas las herramientas por categoría — AIForge" },
-      {
-        name: "description",
-        content:
-          "Directorio completo de herramientas de inteligencia artificial filtrable por categoría y modelo de precio, con fichas técnicas revisadas.",
-      },
-      { property: "og:title", content: "Directorio de IA — AIForge" },
-      { property: "og:description", content: "Todas las herramientas de IA filtrables por categoría y precio." },
+      { title },
+      { name: "description", content: description },
+      { property: "og:title", content: title },
+      { property: "og:description", content: description },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/directorio-ia" },
       { name: "twitter:card", content: "summary" },
@@ -45,7 +52,8 @@ export const Route = createFileRoute("/directorio-ia")({
         ),
       },
     ],
-  }),
+    };
+  },
   component: Directorio,
 });
 
@@ -145,9 +153,30 @@ function Directorio() {
             {filtered.length} herramienta{filtered.length === 1 ? "" : "s"}
           </p>
           {filtered.length === 0 ? (
-            <p className="rounded-xl border border-dashed border-border p-10 text-center text-muted-foreground">
-              No hay resultados con esa combinación de filtros.
-            </p>
+            <div className="rounded-xl border border-dashed border-border p-10 text-center">
+              <p className="mb-6 text-muted-foreground">No hay herramientas con esa combinación de filtros.</p>
+              <div className="flex flex-wrap justify-center gap-3">
+                <Link
+                  to="/directorio-ia"
+                  search={{}}
+                  className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+                >
+                  Quitar filtros
+                </Link>
+                <Link
+                  to="/recomendador"
+                  className="rounded-lg border border-border px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-accent"
+                >
+                  Usar el recomendador
+                </Link>
+                <Link
+                  to="/contacto"
+                  className="rounded-lg border border-border px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-accent"
+                >
+                  Proponer una herramienta
+                </Link>
+              </div>
+            </div>
           ) : (
             <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
               {filtered.map((tool) => (
