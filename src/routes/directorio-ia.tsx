@@ -22,7 +22,7 @@ export const Route = createFileRoute("/directorio-ia")({
   head: ({ match }) => {
     const { categoria, precio } = match.search;
     const catName = categoria ? categoryBySlug(categoria)?.name : undefined;
-    const priceName = precio ? pricingLabels[precio].toLowerCase() : undefined;
+    const priceName = precio ? pricingLabels[precio]?.toLowerCase() : undefined;
     const suffix = [catName, priceName ? `precio ${priceName}` : undefined].filter(Boolean).join(", ");
     const title = suffix
       ? `Herramientas de IA: ${suffix} — AIForge`
