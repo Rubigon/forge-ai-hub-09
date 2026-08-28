@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Check } from "lucide-react";
+import { toast } from "sonner";
 import { trackEvent } from "@/lib/analytics";
 
 /**
@@ -17,6 +18,15 @@ export function NewsletterForm({ compact = false }: { compact?: boolean }) {
       return;
     }
     trackEvent("newsletter_signup");
+    try {
+      const raw = window.localStorage.getItem("aiforge-newsletter");
+      const list: string[] = raw ? JSON.parse(raw) : [];
+      if (!list.includes(email)) list.push(email);
+      window.localStorage.setItem("aiforge-newsletter", JSON.stringify(list));
+    } catch {
+      /* almacenamiento no disponible: la suscripción sigue confirmándose */
+    }
+    toast.success("Suscripción registrada. Te avisaremos en cuanto lancemos la newsletter.");
     setState("done");
   };
 
