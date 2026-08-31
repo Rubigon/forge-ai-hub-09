@@ -84,7 +84,7 @@ export function RecommenderWizard() {
           </p>
           {results.length === 0 ? (
             <p className="rounded-lg border border-forge-border p-4 text-sm text-forge-muted">
-              No hay coincidencias exactas con esos filtros. Prueba a ampliar el presupuesto.
+              No hay coincidencias con esos filtros. Prueba a ampliar el presupuesto.
             </p>
           ) : (
             <ul className="space-y-3">
@@ -219,10 +219,27 @@ function recommend(task: TaskId, budget: BudgetId, level: LevelId): { tool: Tool
       if (tool.isPopular) score += 1;
       return { tool, score, reasons };
     })
-    .filter((r) => r.score > 2)
     .sort((a, b) => b.score - a.score || b.tool.rating - a.tool.rating);
 
-  return scored.slice(0, 3).map(({ tool, reasons }) => ({
+  // Siempre debe haber al menos una recomendación: si ningún resultado supera
+  // el umbral, se relaja el filtro y, en última instancia, se recomienda la
+  // herramienta mejor valorada del catálogo.
+  let selected = scored.filter((r) => r.score > 2);
+  if (selected.length === 0) selected = scored.slice(0, 3);
+  if (selected.length === 0) {
+    const fallback = [...tools].sort((a, b) => b.rating - a.rating)[0];
+    if (fallback) {
+      selected = [
+        {
+          tool: fallback,
+          score: 0,
+          reasons: ["es la herramienta mejor valorada del catálogo y cubre tareas generales"],
+        },
+      ];
+    }
+  }
+
+  return selected.slice(0, 3).map(({ tool, reasons }) => ({
     tool,
     reason: `La recomendamos porque ${reasons.slice(0, 2).join(" y ")}. Puntuación demo: ${tool.rating.toFixed(1)}/5.`,
   }));
