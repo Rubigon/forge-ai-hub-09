@@ -8,7 +8,6 @@ import { freeTools, newTools, popularTools, tools } from "@/data/tools";
 import { AdSlot } from "@/components/AdSlot";
 import { ArticleCard } from "@/components/ArticleCard";
 import { ComparisonCard } from "@/components/ComparisonCard";
-import { NewsletterForm } from "@/components/NewsletterForm";
 import { RecommenderWizard } from "@/components/RecommenderWizard";
 import { SectionHeader } from "@/components/SectionHeader";
 import { ToolCard } from "@/components/ToolCard";
@@ -245,30 +244,6 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Recursos */}
-      <section className="border-t border-border px-6 py-16">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 rounded-2xl bg-forge p-8 text-forge-foreground sm:p-12 lg:grid-cols-2">
-          <div>
-            <p className="label-mono mb-4 text-forge-muted">Recurso gratuito</p>
-            <h2 className="mb-4 font-display text-3xl font-extrabold tracking-tight">
-              Guía práctica de IA para estudiantes y programadores
-            </h2>
-            <p className="mb-8 text-forge-muted">
-              Nuestro recurso descargable con las estructuras de prompt, flujos de trabajo y herramientas que usamos
-              a diario. Suscríbete y te la enviaremos cuando esté lista.
-            </p>
-            <Link
-              to="/recursos"
-              className="inline-flex items-center gap-2 rounded-lg bg-forge-foreground px-6 py-3 text-sm font-semibold text-forge transition-opacity hover:opacity-90"
-            >
-              Ver recursos <ArrowRight className="size-4" aria-hidden />
-            </Link>
-          </div>
-          <div className="rounded-xl border border-forge-border bg-forge-card p-6">
-            <NewsletterForm />
-          </div>
-        </div>
-      </section>
     </main>
   );
 }

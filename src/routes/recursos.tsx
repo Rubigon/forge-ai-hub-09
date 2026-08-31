@@ -5,7 +5,6 @@ import { featuredArticles } from "@/data/articles";
 import { ArticleCard } from "@/components/ArticleCard";
 import { ToolCard } from "@/components/ToolCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { NewsletterForm } from "@/components/NewsletterForm";
 import { AdSlot } from "@/components/AdSlot";
 
 export const Route = createFileRoute("/recursos")({
@@ -84,7 +83,6 @@ function Recursos() {
         </div>
       </section>
 
-      <NewsletterForm />
     </main>
   );
 }

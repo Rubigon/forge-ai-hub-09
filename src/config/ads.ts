@@ -12,6 +12,6 @@ export type AdsMode = "off" | "placeholder" | "live";
 export type AdPosition = "top-content" | "in-content" | "sidebar" | "bottom-content";
 
 export const adsConfig: { mode: AdsMode; client: string } = {
-  mode: "placeholder",
+  mode: "off",
   client: "", // p. ej. "ca-pub-XXXX" cuando se active AdSense
 };

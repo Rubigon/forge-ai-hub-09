@@ -13,7 +13,6 @@ import { PromptOptimizer } from "@/components/apps/PromptOptimizer";
 import { CostCalculator } from "@/components/apps/CostCalculator";
 import { TokenCalculator } from "@/components/apps/TokenCalculator";
 import { JsonFormatter } from "@/components/apps/JsonFormatter";
-import { RegexTester } from "@/components/apps/RegexTester";
 import { TextAnalyzer } from "@/components/apps/TextAnalyzer";
 import type { Tool } from "@/types";
 
@@ -22,7 +21,6 @@ const appComponents: Record<string, () => React.JSX.Element> = {
   "calculadora-costes-ia": CostCalculator,
   "calculadora-tokens": TokenCalculator,
   "formateador-json": JsonFormatter,
-  "probador-regex": RegexTester,
   "analizador-texto": TextAnalyzer,
 };
 
