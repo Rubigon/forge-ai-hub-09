@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import { site } from "@/config/site";
-import { NewsletterForm } from "@/components/NewsletterForm";
 
 const columns = [
   {
@@ -50,7 +49,6 @@ export function Footer() {
               AI<span className="text-muted-foreground">FORGE</span>
             </p>
             <p className="mb-8 max-w-xs text-sm text-muted-foreground">{site.claim}</p>
-            <NewsletterForm compact />
           </div>
           {columns.map((col) => (
             <nav key={col.title} aria-label={`Enlaces de ${col.title}`}>

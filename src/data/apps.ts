@@ -39,13 +39,6 @@ export const interactiveApps: InteractiveApp[] = [
     isPopular: true,
   },
   {
-    slug: "probador-regex",
-    name: "Probador Regex",
-    tagline: "Prueba expresiones regulares con resaltado de coincidencias.",
-    description: "Escribe una expresión regular, pega un texto de prueba y visualiza coincidencias y grupos de captura.",
-    category: "Desarrollo",
-  },
-  {
     slug: "analizador-texto",
     name: "Analizador de texto",
     tagline: "Palabras, caracteres, legibilidad y densidad léxica.",
