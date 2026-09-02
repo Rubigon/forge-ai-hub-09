@@ -145,4 +145,6 @@ export interface SearchItem {
   category?: CategorySlug;
   /** Modelo de precio (solo herramientas). */
   pricing?: PricingModel;
+  /** Parámetros de búsqueda para enlaces filtrados (categorías). */
+  searchParams?: Record<string, string>;
 }

@@ -61,7 +61,8 @@ export function buildSearchIndex(): SearchItem[] {
       type: "categoria",
       title: c.name,
       description: `${c.description} ${count} herramienta${count === 1 ? "" : "s"} en el directorio.`,
-      url: `/directorio-ia?categoria=${c.slug}`,
+      url: "/directorio-ia",
+      searchParams: { categoria: c.slug },
       category: c.slug,
       keywords: [c.name, c.description, c.slug.replace(/-/g, " "), "categoría"].join(" ").toLowerCase(),
     });
