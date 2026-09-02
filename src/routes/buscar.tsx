@@ -1,18 +1,32 @@
 import { useMemo } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { buildSearchIndex, searchItems, searchTypeLabels } from "@/lib/search";
+import { buildSearchIndex, groupResults, searchItems, searchTypeLabels, searchTypeOrder } from "@/lib/search";
+import { categories } from "@/data/categories";
+import { pricingLabels } from "@/data/tools";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
-import { AdSlot } from "@/components/AdSlot";
+import type { PricingModel, SearchItemType } from "@/types";
+
+type Search = { q?: string; tipo?: string; categoria?: string; precio?: string };
 
 export const Route = createFileRoute("/buscar")({
-  validateSearch: (search: Record<string, unknown>): { q?: string } =>
-    typeof search['q'] === "string" && search['q'] ? { q: search['q'] } : {},
+  validateSearch: (search: Record<string, unknown>): Search => {
+    const out: Search = {};
+    if (typeof search["q"] === "string" && search["q"]) out.q = search["q"];
+    if (typeof search["tipo"] === "string" && searchTypeOrder.includes(search["tipo"] as SearchItemType))
+      out.tipo = search["tipo"];
+    if (typeof search["categoria"] === "string" && categories.some((c) => c.slug === search["categoria"]))
+      out.categoria = search["categoria"];
+    if (typeof search["precio"] === "string" && ["gratis", "freemium", "pago"].includes(search["precio"]))
+      out.precio = search["precio"];
+    return out;
+  },
   head: () => ({
     meta: [
       { title: "Buscar en AIForge: herramientas, comparativas y guías" },
       {
         name: "description",
-        content: "Busca en todo el catálogo de AIForge: herramientas de IA, comparativas, guías, tutoriales y utilidades.",
+        content:
+          "Busca en todo el catálogo de AIForge: herramientas de IA, comparativas, guías, tutoriales, categorías y utilidades gratuitas.",
       },
       { property: "og:title", content: "Buscador — AIForge" },
       { property: "og:description", content: "Busca herramientas, comparativas y contenidos de IA." },
@@ -27,9 +41,27 @@ export const Route = createFileRoute("/buscar")({
 });
 
 function Buscar() {
-  const { q = "" } = Route.useSearch();
+  const { q = "", tipo, categoria, precio } = Route.useSearch();
   const navigate = Route.useNavigate();
-  const results = useMemo(() => (q ? searchItems(q, buildSearchIndex(), 40) : []), [q]);
+
+  const results = useMemo(
+    () =>
+      q
+        ? searchItems(q, buildSearchIndex(), 60, {
+            type: (tipo as SearchItemType) ?? "todos",
+            category: categoria ?? "todas",
+            pricing: (precio as PricingModel) ?? "todos",
+          })
+        : [],
+    [q, tipo, categoria, precio],
+  );
+  const groups = useMemo(() => groupResults(results), [results]);
+
+  const setFilter = (key: "tipo" | "categoria" | "precio", value: string) =>
+    navigate({
+      to: "/buscar",
+      search: (prev) => ({ ...prev, [key]: value || undefined }),
+    });
 
   return (
     <main className="mx-auto max-w-4xl px-6 py-12">
@@ -38,24 +70,27 @@ function Buscar() {
 
       <form
         role="search"
-        className="mb-10"
+        className="mb-6"
         onSubmit={(e) => {
           e.preventDefault();
           const value = new FormData(e.currentTarget).get("q");
-          navigate({ to: "/buscar", search: { q: typeof value === "string" ? value : "" } });
+          navigate({
+            to: "/buscar",
+            search: (prev) => ({ ...prev, q: typeof value === "string" ? value : "" }),
+          });
         }}
       >
         <label htmlFor="q" className="label-mono mb-2 block text-muted-foreground">
           Término de búsqueda
         </label>
-        <div className="flex gap-2">
+        <div className="flex flex-col gap-2 sm:flex-row">
           <input
             id="q"
             name="q"
             type="search"
             defaultValue={q}
-            placeholder="ChatGPT, automatizar, prompt…"
-            className="flex-1 rounded-lg border border-input bg-background px-4 py-2.5 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
+            placeholder="ChatGPT, programar, prompt…"
+            className="min-w-0 flex-1 rounded-lg border border-input bg-background px-4 py-2.5 text-sm outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-ring"
           />
           <button
             type="submit"
@@ -67,25 +102,63 @@ function Buscar() {
       </form>
 
       {q && (
+        <div className="mb-8 grid gap-3 sm:grid-cols-3">
+          <Select label="Tipo" value={tipo ?? ""} onChange={(v) => setFilter("tipo", v)}>
+            <option value="">Todos los tipos</option>
+            {searchTypeOrder.map((t) => (
+              <option key={t} value={t}>
+                {searchTypeLabels[t]}
+              </option>
+            ))}
+          </Select>
+          <Select label="Categoría" value={categoria ?? ""} onChange={(v) => setFilter("categoria", v)}>
+            <option value="">Todas las categorías</option>
+            {categories.map((c) => (
+              <option key={c.slug} value={c.slug}>
+                {c.name}
+              </option>
+            ))}
+          </Select>
+          <Select label="Precio" value={precio ?? ""} onChange={(v) => setFilter("precio", v)}>
+            <option value="">Cualquier precio</option>
+            {(["gratis", "freemium", "pago"] as PricingModel[]).map((p) => (
+              <option key={p} value={p}>
+                {pricingLabels[p]}
+              </option>
+            ))}
+          </Select>
+        </div>
+      )}
+
+      {q && (
         <p className="mb-6 font-mono text-xs text-muted-foreground">
           {results.length} resultado{results.length === 1 ? "" : "s"} para «{q}»
         </p>
       )}
 
-      <ul className="space-y-3">
-        {results.map((item) => (
-          <li key={item.url}>
-            <Link
-              to={item.url}
-              className="block rounded-xl border border-border p-5 transition-shadow hover:shadow-lg"
-            >
-              <p className="label-mono mb-2 text-muted-foreground">{searchTypeLabels[item.type]}</p>
-              <p className="font-display font-semibold">{item.title}</p>
-              <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
-            </Link>
-          </li>
+      <div className="space-y-10">
+        {groups.map((group) => (
+          <section key={group.type} aria-labelledby={`grupo-${group.type}`}>
+            <h2 id={`grupo-${group.type}`} className="label-mono mb-3 text-muted-foreground">
+              {searchTypeLabels[group.type]} · {group.items.length}
+            </h2>
+            <ul className="space-y-3">
+              {group.items.map((item) => (
+                <li key={`${item.url}-${item.title}`}>
+                  <Link
+                    to={item.url}
+                    search={item.searchParams}
+                    className="block rounded-xl border border-border p-5 transition-shadow hover:shadow-lg"
+                  >
+                    <p className="font-display font-semibold">{item.title}</p>
+                    <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </section>
         ))}
-      </ul>
+      </div>
 
       {!q && (
         <section aria-labelledby="sugerencias">
@@ -115,8 +188,8 @@ function Buscar() {
               <p className="mt-1 text-sm text-muted-foreground">Análisis cara a cara.</p>
             </Link>
             <Link to="/recomendador" className="rounded-xl border border-border p-5 transition-shadow hover:shadow-lg">
-              <p className="font-display font-semibold">Recomendador</p>
-              <p className="mt-1 text-sm text-muted-foreground">3 preguntas y tu IA ideal.</p>
+              <p className="font-display font-semibold">La Forja</p>
+              <p className="mt-1 text-sm text-muted-foreground">Responde y obtén tu herramienta.</p>
             </Link>
           </div>
         </section>
@@ -125,12 +198,19 @@ function Buscar() {
       {q && results.length === 0 && (
         <div className="rounded-xl border border-dashed border-border p-10 text-center">
           <p className="mb-6 text-muted-foreground">
-            Sin resultados para «{q}». Prueba con un término más general o explora estas salidas:
+            Sin resultados para «{q}» con los filtros activos. Prueba a quitarlos o busca un término más general.
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <Link
-              to="/directorio-ia"
+              to="/buscar"
+              search={{ q }}
               className="rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
+            >
+              Quitar filtros
+            </Link>
+            <Link
+              to="/directorio-ia"
+              className="rounded-lg border border-border px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-accent"
             >
               Ver todo el directorio
             </Link>
@@ -138,19 +218,36 @@ function Buscar() {
               to="/recomendador"
               className="rounded-lg border border-border px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-accent"
             >
-              Usar el recomendador
-            </Link>
-            <Link
-              to="/contacto"
-              className="rounded-lg border border-border px-5 py-2.5 text-sm font-semibold transition-colors hover:bg-accent"
-            >
-              Proponer una herramienta
+              Usar La Forja
             </Link>
           </div>
         </div>
       )}
-
-      <AdSlot position="bottom-content" className="mt-12" />
     </main>
+  );
+}
+
+function Select({
+  label,
+  value,
+  onChange,
+  children,
+}: {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <label className="block">
+      <span className="label-mono mb-1.5 block text-muted-foreground">{label}</span>
+      <select
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full rounded-lg border border-input bg-card px-3 py-2.5 text-sm focus:outline-none"
+      >
+        {children}
+      </select>
+    </label>
   );
 }
