@@ -1,16 +1,17 @@
 import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { Command } from "cmdk";
-import { GitCompareArrows, Newspaper, Search, Wrench, Zap } from "lucide-react";
-import { buildSearchIndex, searchItems, searchTypeLabels } from "@/lib/search";
+import { FolderTree, GitCompareArrows, Newspaper, Search, Wrench, Zap } from "lucide-react";
+import { buildSearchIndex, groupResults, searchItems, searchTypeLabels } from "@/lib/search";
 import { trackEvent } from "@/lib/analytics";
-import type { SearchItem } from "@/types";
+import type { SearchItemType } from "@/types";
 
-const icons: Record<SearchItem["type"], typeof Wrench> = {
+const icons: Record<SearchItemType, typeof Wrench> = {
   herramienta: Wrench,
   app: Zap,
   comparativa: GitCompareArrows,
   articulo: Newspaper,
+  categoria: FolderTree,
 };
 
 /** Buscador global con atajo ⌘K / Ctrl+K, resultados agrupados por tipo. */
@@ -39,10 +40,7 @@ export function SearchDialog() {
 
   if (!open) return null;
 
-  const grouped = results.reduce<Record<string, SearchItem[]>>((acc, item) => {
-    (acc[item.type] ??= []).push(item);
-    return acc;
-  }, {});
+  const grouped = groupResults(results);
 
   return (
     <div
@@ -77,22 +75,22 @@ export function SearchDialog() {
           {query.trim().length < 2 && (
             <p className="py-8 text-center text-xs text-muted-foreground">Escribe al menos 2 caracteres para buscar.</p>
           )}
-          {Object.entries(grouped).map(([type, items]) => (
+          {grouped.map(({ type, items }) => (
             <Command.Group
               key={type}
-              heading={searchTypeLabels[type as SearchItem["type"]]}
+              heading={searchTypeLabels[type]}
               className="text-xs text-muted-foreground [&_[cmdk-group-heading]]:label-mono [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-2"
             >
               {items.map((item) => {
                 const Icon = icons[item.type];
                 return (
                   <Command.Item
-                    key={item.url}
-                    value={item.url}
+                    key={`${item.url}-${item.title}`}
+                    value={`${item.url} ${item.title}`}
                     onSelect={() => {
                       setOpen(false);
                       setQuery("");
-                      navigate({ to: item.url });
+                      navigate({ to: item.url, search: item.searchParams ?? {} });
                     }}
                     className="flex cursor-pointer items-center gap-3 rounded-lg px-3 py-2.5 text-sm text-foreground aria-selected:bg-accent"
                   >

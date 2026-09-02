@@ -133,10 +133,18 @@ export interface InteractiveApp {
   isPopular?: boolean;
 }
 
+export type SearchItemType = "herramienta" | "app" | "comparativa" | "articulo" | "categoria";
+
 export interface SearchItem {
-  type: "herramienta" | "app" | "comparativa" | "articulo";
+  type: SearchItemType;
   title: string;
   description: string;
   url: string;
   keywords: string;
+  /** Slug de categoría (solo herramientas y categorías). */
+  category?: CategorySlug;
+  /** Modelo de precio (solo herramientas). */
+  pricing?: PricingModel;
+  /** Parámetros de búsqueda para enlaces filtrados (categorías). */
+  searchParams?: Record<string, string>;
 }

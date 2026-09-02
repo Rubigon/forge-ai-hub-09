@@ -15,6 +15,7 @@ import { Route as AvisoLegalRouteImport } from './routes/aviso-legal'
 import { Route as BuscarRouteImport } from './routes/buscar'
 import { Route as ContactoRouteImport } from './routes/contacto'
 import { Route as DirectorioIaRouteImport } from './routes/directorio-ia'
+import { Route as MetodologiaRouteImport } from './routes/metodologia'
 import { Route as NosotrosRouteImport } from './routes/nosotros'
 import { Route as PoliticaCookiesRouteImport } from './routes/politica-cookies'
 import { Route as PoliticaPrivacidadRouteImport } from './routes/politica-privacidad'
@@ -62,6 +63,11 @@ const ContactoRoute = ContactoRouteImport.update({
 const DirectorioIaRoute = DirectorioIaRouteImport.update({
   id: '/directorio-ia',
   path: '/directorio-ia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MetodologiaRoute = MetodologiaRouteImport.update({
+  id: '/metodologia',
+  path: '/metodologia',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NosotrosRoute = NosotrosRouteImport.update({
@@ -162,6 +168,7 @@ export interface FileRoutesByFullPath {
   '/buscar': typeof BuscarRoute
   '/contacto': typeof ContactoRoute
   '/directorio-ia': typeof DirectorioIaRoute
+  '/metodologia': typeof MetodologiaRoute
   '/nosotros': typeof NosotrosRoute
   '/politica-cookies': typeof PoliticaCookiesRoute
   '/politica-privacidad': typeof PoliticaPrivacidadRoute
@@ -188,6 +195,7 @@ export interface FileRoutesByTo {
   '/buscar': typeof BuscarRoute
   '/contacto': typeof ContactoRoute
   '/directorio-ia': typeof DirectorioIaRoute
+  '/metodologia': typeof MetodologiaRoute
   '/nosotros': typeof NosotrosRoute
   '/politica-cookies': typeof PoliticaCookiesRoute
   '/politica-privacidad': typeof PoliticaPrivacidadRoute
@@ -215,6 +223,7 @@ export interface FileRoutesById {
   '/buscar': typeof BuscarRoute
   '/contacto': typeof ContactoRoute
   '/directorio-ia': typeof DirectorioIaRoute
+  '/metodologia': typeof MetodologiaRoute
   '/nosotros': typeof NosotrosRoute
   '/politica-cookies': typeof PoliticaCookiesRoute
   '/politica-privacidad': typeof PoliticaPrivacidadRoute
@@ -243,6 +252,7 @@ export interface FileRouteTypes {
     | '/buscar'
     | '/contacto'
     | '/directorio-ia'
+    | '/metodologia'
     | '/nosotros'
     | '/politica-cookies'
     | '/politica-privacidad'
@@ -269,6 +279,7 @@ export interface FileRouteTypes {
     | '/buscar'
     | '/contacto'
     | '/directorio-ia'
+    | '/metodologia'
     | '/nosotros'
     | '/politica-cookies'
     | '/politica-privacidad'
@@ -295,6 +306,7 @@ export interface FileRouteTypes {
     | '/buscar'
     | '/contacto'
     | '/directorio-ia'
+    | '/metodologia'
     | '/nosotros'
     | '/politica-cookies'
     | '/politica-privacidad'
@@ -322,6 +334,7 @@ export interface RootRouteChildren {
   BuscarRoute: typeof BuscarRoute
   ContactoRoute: typeof ContactoRoute
   DirectorioIaRoute: typeof DirectorioIaRoute
+  MetodologiaRoute: typeof MetodologiaRoute
   NosotrosRoute: typeof NosotrosRoute
   PoliticaCookiesRoute: typeof PoliticaCookiesRoute
   PoliticaPrivacidadRoute: typeof PoliticaPrivacidadRoute
@@ -384,6 +397,13 @@ declare module '@tanstack/react-router' {
       path: '/directorio-ia'
       fullPath: '/directorio-ia'
       preLoaderRoute: typeof DirectorioIaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/metodologia': {
+      id: '/metodologia'
+      path: '/metodologia'
+      fullPath: '/metodologia'
+      preLoaderRoute: typeof MetodologiaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/nosotros': {
@@ -522,6 +542,7 @@ const rootRouteChildren: RootRouteChildren = {
   BuscarRoute: BuscarRoute,
   ContactoRoute: ContactoRoute,
   DirectorioIaRoute: DirectorioIaRoute,
+  MetodologiaRoute: MetodologiaRoute,
   NosotrosRoute: NosotrosRoute,
   PoliticaCookiesRoute: PoliticaCookiesRoute,
   PoliticaPrivacidadRoute: PoliticaPrivacidadRoute,
