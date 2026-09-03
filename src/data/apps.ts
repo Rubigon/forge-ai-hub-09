@@ -45,6 +45,22 @@ export const interactiveApps: InteractiveApp[] = [
     description: "Analiza cualquier texto: recuento de palabras, tiempo de lectura, frases y palabras más frecuentes.",
     category: "Escritura",
   },
+  {
+    slug: "probador-regex",
+    name: "Probador de Regex",
+    tagline: "Prueba expresiones regulares con coincidencias y grupos en tiempo real.",
+    description:
+      "Escribe un patrón, activa flags y comprueba al instante coincidencias, posiciones y grupos de captura sobre tu texto.",
+    category: "Desarrollo",
+  },
+  {
+    slug: "formateador-sql",
+    name: "Formateador SQL",
+    tagline: "Ordena y revisa consultas SQL ilegibles.",
+    description:
+      "Normaliza palabras clave, indenta cláusulas y avisa de riesgos comunes como SELECT * o DELETE sin WHERE.",
+    category: "Desarrollo",
+  },
 ];
 
 export const appBySlug = (slug: string) => interactiveApps.find((a) => a.slug === slug);

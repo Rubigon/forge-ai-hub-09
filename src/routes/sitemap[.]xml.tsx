@@ -16,6 +16,7 @@ function buildSitemap(origin: string) {
     "/tutoriales",
     "/recursos",
     "/recomendador",
+    "/metodologia",
     "/autor",
     "/nosotros",
     "/contacto",
