@@ -83,7 +83,7 @@ function Directorio() {
               <li>
                 <Link
                   to="/directorio-ia"
-                  search={(prev) => ({ ...prev, categoria: undefined })}
+                  search={{ categoria: undefined, precio }}
                   className={cn(
                     "block rounded-md px-2 py-1.5",
                     !categoria ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
@@ -96,7 +96,7 @@ function Directorio() {
                 <li key={cat.slug}>
                   <Link
                     to="/directorio-ia"
-                    search={(prev) => ({ ...prev, categoria: cat.slug })}
+                    search={{ categoria: cat.slug, precio }}
                     className={cn(
                       "block rounded-md px-2 py-1.5",
                       categoria === cat.slug
@@ -117,7 +117,7 @@ function Directorio() {
               <li>
                 <Link
                   to="/directorio-ia"
-                  search={(prev) => ({ ...prev, precio: undefined })}
+                  search={{ categoria, precio: undefined }}
                   className={cn(
                     "block rounded-md px-2 py-1.5",
                     !precio ? "bg-primary text-primary-foreground" : "text-muted-foreground hover:text-foreground",
@@ -130,7 +130,7 @@ function Directorio() {
                 <li key={p}>
                   <Link
                     to="/directorio-ia"
-                    search={(prev) => ({ ...prev, precio: p })}
+                    search={{ categoria, precio: p }}
                     className={cn(
                       "block rounded-md px-2 py-1.5",
                       precio === p

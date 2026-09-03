@@ -147,7 +147,7 @@ function Buscar() {
                 <li key={`${item.url}-${item.title}`}>
                   <Link
                     to={item.url}
-                    search={item.searchParams}
+                    search={item.searchParams ?? {}}
                     className="block rounded-xl border border-border p-5 transition-shadow hover:shadow-lg"
                   >
                     <p className="font-display font-semibold">{item.title}</p>
