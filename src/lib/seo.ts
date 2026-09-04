@@ -1,4 +1,5 @@
 import { site } from "@/config/site";
+import { editorialScore } from "@/lib/scoring";
 import type { Article, Comparison, Tool } from "@/types";
 
 export interface Crumb {
