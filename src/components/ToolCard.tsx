@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { pricingLabels } from "@/data/tools";
+import { ScoreBadge } from "@/components/EditorialScore";
 import { cn } from "@/lib/utils";
 import type { Tool } from "@/types";
 
