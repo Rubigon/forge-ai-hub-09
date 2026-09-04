@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { buildSearchIndex, searchItems } from "@/lib/search";
+import { buildSearchIndex, groupResults, searchItems } from "@/lib/search";
+import { editorialScore } from "@/lib/scoring";
+import { interactiveApps } from "@/data/apps";
 import { optimizePrompt } from "@/lib/prompt-optimizer";
 import { estimateCost, estimateTokens, modelPrices } from "@/data/model-prices";
 import { breadcrumbJsonLd, formatDate, softwareApplicationJsonLd } from "@/lib/seo";
