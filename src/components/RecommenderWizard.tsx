@@ -242,8 +242,11 @@ function recommend(task: TaskId, budget: BudgetId, level: LevelId): { tool: Tool
     }
   }
 
-  return selected.slice(0, 3).map(({ tool, reasons }) => ({
+  return selected.slice(0, 3).map(({ tool, score, reasons }) => ({
     tool,
-    reason: `La recomendamos porque ${reasons.slice(0, 2).join(" y ")}. Puntuación demo: ${tool.rating.toFixed(1)}/5.`,
+    match: Math.max(40, Math.min(98, Math.round((score / MAX_SCORE) * 60) + 38)),
+    reason: `La recomendamos porque ${
+      reasons.length > 0 ? reasons.slice(0, 2).join(" y ") : "cubre la tarea que has elegido"
+    }. AIForge Score editorial: ${editorialScore(tool).overall.toFixed(1)}/10.`,
   }));
 }
