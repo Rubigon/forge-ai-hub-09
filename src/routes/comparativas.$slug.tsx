@@ -1,4 +1,6 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { ScoreBadge } from "@/components/EditorialScore";
+import { difficultyLabel } from "@/lib/scoring";
 import { comparisonBySlug } from "@/data/comparisons";
 import { toolBySlug } from "@/data/tools";
 import { breadcrumbJsonLd, comparisonJsonLd, formatDate } from "@/lib/seo";
