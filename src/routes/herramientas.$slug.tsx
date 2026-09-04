@@ -134,8 +134,8 @@ function ToolDetail({ tool }: { tool: Tool }) {
               { k: "Precio", v: tool.priceNote },
               { k: "Plan gratis", v: tool.freeTier ? "Sí" : "No" },
               { k: "Nivel", v: difficultyLabel(tool) },
-              { k: "API", v: hasApi(tool) ? "Sí" : "No" },
-              { k: "Ideal para", v: audienceFor(tool) },
+              { k: "API", v: hasApi(tool.slug) ? "Sí" : "No" },
+              { k: "Ideal para", v: audienceFor(tool).join(", ") },
             ].map((item) => (
               <div key={item.k} className="bg-card p-4">
                 <dt className="label-mono mb-1 text-muted-foreground">{item.k}</dt>
