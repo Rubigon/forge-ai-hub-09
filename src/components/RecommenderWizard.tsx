@@ -4,6 +4,7 @@ import { ArrowLeft, RotateCcw } from "lucide-react";
 import { budgetOptions, levelOptions, taskOptions } from "@/data/categories";
 import { tools } from "@/data/tools";
 import { trackEvent } from "@/lib/analytics";
+import { editorialScore } from "@/lib/scoring";
 import { cn } from "@/lib/utils";
 import type { BudgetId, LevelId, TaskId, Tool } from "@/types";
 
