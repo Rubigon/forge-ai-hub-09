@@ -186,7 +186,9 @@ function OptionGrid({
   );
 }
 
-function recommend(task: TaskId, budget: BudgetId, level: LevelId): { tool: Tool; reason: string }[] {
+const MAX_SCORE = 6;
+
+function recommend(task: TaskId, budget: BudgetId, level: LevelId): { tool: Tool; reason: string; match: number }[] {
   const matches = tools.filter((t) => t.tasks.includes(task));
   const scored = matches
     .map((tool) => {
