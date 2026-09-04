@@ -14,6 +14,11 @@ import { CostCalculator } from "@/components/apps/CostCalculator";
 import { TokenCalculator } from "@/components/apps/TokenCalculator";
 import { JsonFormatter } from "@/components/apps/JsonFormatter";
 import { TextAnalyzer } from "@/components/apps/TextAnalyzer";
+import { RegexTester } from "@/components/apps/RegexTester";
+import { SqlFormatter } from "@/components/apps/SqlFormatter";
+import { ScorePanel } from "@/components/EditorialScore";
+import { difficultyLabel } from "@/lib/scoring";
+import { audienceFor, hasApi, sourcesFor } from "@/data/tool-facts";
 import type { Tool } from "@/types";
 
 const appComponents: Record<string, () => React.JSX.Element> = {
@@ -22,6 +27,8 @@ const appComponents: Record<string, () => React.JSX.Element> = {
   "calculadora-tokens": TokenCalculator,
   "formateador-json": JsonFormatter,
   "analizador-texto": TextAnalyzer,
+  "probador-regex": RegexTester,
+  "formateador-sql": SqlFormatter,
 };
 
 export const Route = createFileRoute("/herramientas/$slug")({
@@ -121,12 +128,14 @@ function ToolDetail({ tool }: { tool: Tool }) {
             </div>
           </header>
 
-          <dl className="mb-10 grid grid-cols-2 gap-px overflow-hidden rounded-xl bg-border sm:grid-cols-4">
+          <dl className="mb-10 grid grid-cols-2 gap-px overflow-hidden rounded-xl bg-border sm:grid-cols-3">
             {[
               { k: "Modelo", v: pricingLabels[tool.pricing] },
               { k: "Precio", v: tool.priceNote },
               { k: "Plan gratis", v: tool.freeTier ? "Sí" : "No" },
-              { k: "Valoración", v: `${tool.rating.toFixed(1)}/5` },
+              { k: "Nivel", v: difficultyLabel(tool) },
+              { k: "API", v: hasApi(tool) ? "Sí" : "No" },
+              { k: "Ideal para", v: audienceFor(tool) },
             ].map((item) => (
               <div key={item.k} className="bg-card p-4">
                 <dt className="label-mono mb-1 text-muted-foreground">{item.k}</dt>
@@ -218,12 +227,33 @@ function ToolDetail({ tool }: { tool: Tool }) {
             verifica precios en la web oficial.
           </p>
 
+          <section className="mb-10" aria-labelledby="fuentes">
+            <h2 id="fuentes" className="mb-4 font-display text-2xl font-bold tracking-tight">
+              Fuentes consultadas
+            </h2>
+            <ul className="space-y-2 text-sm">
+              {sourcesFor(tool).map((source) => (
+                <li key={source.url}>
+                  <a
+                    href={source.url}
+                    target="_blank"
+                    rel="noopener noreferrer nofollow"
+                    className="text-muted-foreground underline underline-offset-4 hover:text-foreground"
+                  >
+                    {source.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+
           <RelatedContent tools={tool.alternatives} />
           <AdSlot position="bottom-content" className="mt-10" />
         </div>
 
         <aside className="hidden lg:block">
           <div className="sticky top-24 space-y-6">
+            <ScorePanel tool={tool} />
             <div className="rounded-xl border border-border p-5">
               <p className="label-mono mb-3 text-muted-foreground">Acceso</p>
               <a
