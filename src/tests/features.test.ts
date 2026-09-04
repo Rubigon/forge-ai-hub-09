@@ -83,3 +83,40 @@ describe("SEO", () => {
     expect(formatDate("2026-01-15")).toMatch(/2026/);
   });
 });
+
+describe("AIForge Score editorial", () => {
+  it("da una puntuación 0-10 y es determinista", () => {
+    for (const tool of tools) {
+      const score = editorialScore(tool);
+      expect(score.overall).toBeGreaterThan(0);
+      expect(score.overall).toBeLessThanOrEqual(10);
+      expect(editorialScore(tool)).toEqual(score);
+    }
+  });
+});
+
+describe("Utilidades interactivas", () => {
+  it("incluye las seis utilidades de la Prioridad 1", () => {
+    const slugs = interactiveApps.map((a) => a.slug);
+    for (const slug of [
+      "optimizador-prompts",
+      "calculadora-tokens",
+      "calculadora-costes-ia",
+      "formateador-json",
+      "probador-regex",
+      "formateador-sql",
+    ]) {
+      expect(slugs).toContain(slug);
+    }
+  });
+});
+
+describe("Buscador agrupado", () => {
+  it("agrupa resultados por tipo y permite filtrar por precio", () => {
+    const index = buildSearchIndex();
+    const groups = groupResults(searchItems("ia", index, 50));
+    expect(groups.length).toBeGreaterThan(0);
+    const gratis = searchItems("ia", index, 50, { pricing: "gratis" });
+    expect(gratis.every((r) => !r.pricing || r.pricing === "gratis")).toBe(true);
+  });
+});
