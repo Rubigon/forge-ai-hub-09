@@ -1,4 +1,5 @@
 import { site } from "@/config/site";
+import { editorialScore } from "@/lib/scoring";
 import type { Article, Comparison, Tool } from "@/types";
 
 export interface Crumb {
@@ -75,11 +76,17 @@ export function softwareApplicationJsonLd(tool: Tool, url: string) {
       priceCurrency: "EUR",
       description: tool.priceNote,
     },
-    aggregateRating: {
-      "@type": "AggregateRating",
-      ratingValue: tool.rating,
-      bestRating: 5,
-      ratingCount: 128,
+    // Sin aggregateRating: AIForge publica una puntuación editorial propia
+    // (ver /metodologia), no valoraciones agregadas de usuarios.
+    review: {
+      "@type": "Review",
+      reviewRating: {
+        "@type": "Rating",
+        ratingValue: editorialScore(tool).overall,
+        bestRating: 10,
+        worstRating: 0,
+      },
+      author: { "@type": "Organization", name: site.name },
     },
   };
 }

@@ -1,4 +1,6 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { ScoreBadge } from "@/components/EditorialScore";
+import { difficultyLabel } from "@/lib/scoring";
 import { comparisonBySlug } from "@/data/comparisons";
 import { toolBySlug } from "@/data/tools";
 import { breadcrumbJsonLd, comparisonJsonLd, formatDate } from "@/lib/seo";
@@ -101,6 +103,47 @@ function ComparativaDetalle() {
       </header>
 
       <AdSlot position="top-content" className="mb-10" />
+
+      <section className="mb-12 grid gap-4 sm:grid-cols-2" aria-labelledby="resumen">
+        <h2 id="resumen" className="sr-only">
+          Resumen rápido
+        </h2>
+        {[a, b].map((tool, i) =>
+          tool ? (
+            <article key={tool.slug} className="rounded-xl border border-border p-5">
+              <div className="mb-3 flex items-start justify-between gap-3">
+                <h3 className="font-display text-lg font-semibold">{tool.name}</h3>
+                <ScoreBadge tool={tool} />
+              </div>
+              <dl className="mb-4 space-y-1.5 text-sm text-muted-foreground">
+                <div className="flex justify-between gap-3">
+                  <dt>Precio</dt>
+                  <dd className="text-right font-medium text-foreground">{tool.priceNote}</dd>
+                </div>
+                <div className="flex justify-between gap-3">
+                  <dt>Plan gratuito</dt>
+                  <dd className="font-medium text-foreground">{tool.freeTier ? "Sí" : "No"}</dd>
+                </div>
+                <div className="flex justify-between gap-3">
+                  <dt>Nivel</dt>
+                  <dd className="font-medium text-foreground">{difficultyLabel(tool)}</dd>
+                </div>
+              </dl>
+              <Link
+                to="/herramientas/$slug"
+                params={{ slug: tool.slug }}
+                className="inline-flex rounded-lg border border-border px-4 py-2 text-sm font-semibold transition-colors hover:bg-accent"
+              >
+                Ver ficha de {tool.name}
+              </Link>
+            </article>
+          ) : (
+            <p key={i} className="rounded-xl border border-dashed border-border p-5 text-sm text-muted-foreground">
+              Ficha no disponible.
+            </p>
+          ),
+        )}
+      </section>
 
       <section className="mb-12" aria-labelledby="tabla">
         <h2 id="tabla" className="mb-4 font-display text-2xl font-bold tracking-tight">

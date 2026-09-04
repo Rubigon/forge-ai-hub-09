@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { pricingLabels } from "@/data/tools";
+import { ScoreBadge } from "@/components/EditorialScore";
 import { cn } from "@/lib/utils";
 import type { Tool } from "@/types";
 
@@ -54,8 +55,8 @@ export function ToolCard({ tool }: { tool: Tool }) {
       <h3 className="mb-1 font-display text-lg font-semibold">{tool.name}</h3>
       <p className="mb-6 line-clamp-2 text-sm text-muted-foreground">{tool.tagline}</p>
       <div className="flex items-center justify-between border-t border-border pt-4">
-        <Rating value={tool.rating} />
-        <span className="font-mono text-[11px] uppercase text-muted-foreground">Demo</span>
+        <ScoreBadge tool={tool} />
+        <span className="font-mono text-[11px] uppercase text-muted-foreground">AIForge Score</span>
       </div>
     </Link>
   );

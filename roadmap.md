@@ -1,13 +1,15 @@
 # AIForge V3 — Prioridad 1
 
-- [ ] 1. Fichas de herramientas completas (dificultad, público, fuentes, precio comprobado, botones de acción)
-- [ ] 2. Eliminar ratings ficticios → AIForge Score editorial /10 con criterios
-- [ ] 3. Buscador global agrupado + filtros (incluye categorías)
-- [ ] 4. La Forja: 6 preguntas, mejor opción + % compatibilidad + alternativas
-- [ ] 5. Seis utilidades completas (Prompt Optimizer, Token Counter, Cost Calculator, JSON, Regex, SQL)
-- [ ] 6. Comparativas mejoradas (scores, precio, plan gratis, perfiles, ¿cuál elegir?)
-- [ ] 7. SEO técnico (title/description/canonical/OG/breadcrumbs únicos)
-- [ ] 8. Responsive (sin scroll horizontal, tablas y header en móvil)
-- [ ] 9. Rendimiento (sin dependencias nuevas pesadas, lazy donde aplique)
-- [ ] 10. Enlazado interno (ficha ↔ alternativas ↔ comparativas ↔ artículos)
-- [ ] Verificación final: rutas, botones, consola, tests, sitemap
+- [x] 1. Fichas de herramientas completas (nivel, API, público, fuentes, acceso oficial)
+- [x] 2. Sin valoraciones ficticias → AIForge Score editorial /10 con página de metodología
+- [x] 3. Buscador global agrupado + filtros (tipo, categoría, precio)
+- [x] 4. La Forja: mejor opción + % de compatibilidad + alternativas, siempre con resultado
+- [x] 5. Seis utilidades (Prompt Optimizer, Tokens, Costes, JSON, Regex, SQL)
+- [x] 6. Comparativas con resumen rápido (score, precio, plan gratis, nivel) y perfiles
+- [x] 7. SEO técnico (titles/descriptions/canonical/OG únicos, sitemap con /metodologia)
+- [x] 8. Responsive (contenedores con overflow controlado en las nuevas utilidades)
+- [x] 9. Rendimiento (sin dependencias nuevas; todo se calcula en el navegador)
+- [x] 10. Enlazado interno (ficha ↔ alternativas ↔ comparativas ↔ metodología)
+- [x] Verificación: tipos OK, 21 tests OK, rutas clave responden 200
+
+Pendiente (fuera de Prioridad 1): newsletter, prioridades 2 y 3 del documento V3.

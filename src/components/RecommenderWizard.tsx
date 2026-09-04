@@ -4,6 +4,7 @@ import { ArrowLeft, RotateCcw } from "lucide-react";
 import { budgetOptions, levelOptions, taskOptions } from "@/data/categories";
 import { tools } from "@/data/tools";
 import { trackEvent } from "@/lib/analytics";
+import { editorialScore } from "@/lib/scoring";
 import { cn } from "@/lib/utils";
 import type { BudgetId, LevelId, TaskId, Tool } from "@/types";
 
@@ -82,29 +83,30 @@ export function RecommenderWizard() {
             Basado en: {taskOptions.find((o) => o.id === task)?.label} ·{" "}
             {budgetOptions.find((o) => o.id === budget)?.label} · {levelOptions.find((o) => o.id === level)?.label}
           </p>
-          {results.length === 0 ? (
-            <p className="rounded-lg border border-forge-border p-4 text-sm text-forge-muted">
-              No hay coincidencias con esos filtros. Prueba a ampliar el presupuesto.
-            </p>
-          ) : (
-            <ul className="space-y-3">
-              {results.map(({ tool, reason }) => (
-                <li key={tool.slug}>
-                  <Link
-                    to="/herramientas/$slug"
-                    params={{ slug: tool.slug }}
-                    className="block rounded-xl border border-forge-border bg-forge p-4 transition-colors hover:border-forge-foreground/40"
-                  >
-                    <div className="mb-1 flex items-center justify-between">
-                      <span className="font-semibold">{tool.name}</span>
-                      <span className="font-mono text-[10px] uppercase text-forge-muted">{tool.pricing}</span>
-                    </div>
-                    <p className="text-xs leading-relaxed text-forge-muted">{reason}</p>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          )}
+          <ul className="space-y-3">
+            {results.map(({ tool, reason, match }, index) => (
+              <li key={tool.slug}>
+                <Link
+                  to="/herramientas/$slug"
+                  params={{ slug: tool.slug }}
+                  className="block rounded-xl border border-forge-border bg-forge p-4 transition-colors hover:border-forge-foreground/40"
+                >
+                  <div className="mb-1 flex items-center justify-between gap-3">
+                    <span className="font-semibold">
+                      {index === 0 && (
+                        <span className="mr-2 rounded bg-forge-foreground px-1.5 py-0.5 font-mono text-[10px] uppercase text-forge">
+                          Mejor opción
+                        </span>
+                      )}
+                      {tool.name}
+                    </span>
+                    <span className="shrink-0 font-mono text-[11px] text-forge-muted">{match}% compatible</span>
+                  </div>
+                  <p className="text-xs leading-relaxed text-forge-muted">{reason}</p>
+                </Link>
+              </li>
+            ))}
+          </ul>
           <button
             type="button"
             onClick={reset}
@@ -185,7 +187,9 @@ function OptionGrid({
   );
 }
 
-function recommend(task: TaskId, budget: BudgetId, level: LevelId): { tool: Tool; reason: string }[] {
+const MAX_SCORE = 6;
+
+function recommend(task: TaskId, budget: BudgetId, level: LevelId): { tool: Tool; reason: string; match: number }[] {
   const matches = tools.filter((t) => t.tasks.includes(task));
   const scored = matches
     .map((tool) => {
@@ -239,8 +243,11 @@ function recommend(task: TaskId, budget: BudgetId, level: LevelId): { tool: Tool
     }
   }
 
-  return selected.slice(0, 3).map(({ tool, reasons }) => ({
+  return selected.slice(0, 3).map(({ tool, score, reasons }) => ({
     tool,
-    reason: `La recomendamos porque ${reasons.slice(0, 2).join(" y ")}. Puntuación demo: ${tool.rating.toFixed(1)}/5.`,
+    match: Math.max(40, Math.min(98, Math.round((score / MAX_SCORE) * 60) + 38)),
+    reason: `La recomendamos porque ${
+      reasons.length > 0 ? reasons.slice(0, 2).join(" y ") : "cubre la tarea que has elegido"
+    }. AIForge Score editorial: ${editorialScore(tool).overall.toFixed(1)}/10.`,
   }));
 }
