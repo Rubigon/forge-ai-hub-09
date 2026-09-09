@@ -147,7 +147,7 @@ const taglines: Partial<Record<Locale, Map>> = {
     make: "複雑なフローのビジュアル自動化。",
     jasper: "AI マーケティングコンテンツのプラットフォーム。",
     gamma: "AI で作るプレゼンとドキュメント。",
-    notebooklm: "自分の資料をもとに answers するリサーチ支援。",
+    notebooklm: "自分の資料をもとに回答するリサーチ支援。",
     otter: "会議の自動文字起こしと要約。",
     julius: "会話型のデータ分析。",
     "canva-magic-studio": "Canva 内の AI 支援グラフィックデザイン。",
