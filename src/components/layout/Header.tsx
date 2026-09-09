@@ -3,10 +3,14 @@ import { useState } from "react";
 import { Menu, Moon, Search, Sun, X } from "lucide-react";
 import { mainNav, site } from "@/config/site";
 import { useTheme } from "@/lib/theme";
+import { useI18n } from "@/lib/i18n";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import type { MessageKey } from "@/i18n/ui";
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const { theme, toggle } = useTheme();
+  const { t } = useI18n();
 
   const openSearch = () =>
     window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }));
@@ -18,12 +22,12 @@ export function Header() {
           <Link
             to="/"
             className="flex items-center gap-2 font-display text-xl font-extrabold tracking-tighter"
-            aria-label={`${site.name} — inicio`}
+            aria-label={site.name}
           >
             <span className="rounded-sm bg-primary px-1.5 py-0.5 text-primary-foreground">AI</span>
             <span>FORGE</span>
           </Link>
-          <nav className="hidden gap-6 text-[13px] font-medium text-muted-foreground md:flex" aria-label="Navegación principal">
+          <nav className="hidden gap-6 text-[13px] font-medium text-muted-foreground md:flex" aria-label={site.name}>
             {mainNav.map((item) => (
               <Link
                 key={item.to}
@@ -31,7 +35,7 @@ export function Header() {
                 className="transition-colors hover:text-foreground"
                 activeProps={{ className: "text-foreground" }}
               >
-                {item.label}
+                {t(item.key as MessageKey)}
               </Link>
             ))}
           </nav>
@@ -41,7 +45,7 @@ export function Header() {
             type="button"
             onClick={openSearch}
             className="hidden items-center gap-2 rounded-full border border-border px-3 py-1.5 font-mono text-xs text-muted-foreground transition-colors hover:text-foreground sm:flex"
-            aria-label="Abrir búsqueda (Comando+K)"
+            aria-label={t("action.searchAria")}
           >
             <Search className="size-3.5" aria-hidden />
             <span>⌘K</span>
@@ -50,34 +54,35 @@ export function Header() {
             type="button"
             onClick={toggle}
             className="rounded-full border border-border p-2 text-muted-foreground transition-colors hover:text-foreground"
-            aria-label={theme === "dark" ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
+            aria-label={theme === "dark" ? t("theme.toLight") : t("theme.toDark")}
           >
             {theme === "dark" ? <Sun className="size-4" aria-hidden /> : <Moon className="size-4" aria-hidden />}
           </button>
+          <LanguageSwitcher />
           <Link
             to="/recomendador"
-            className="hidden rounded-full bg-primary px-4 py-2 text-[13px] font-medium text-primary-foreground shadow-sm transition-opacity hover:opacity-90 sm:block"
+            className="hidden rounded-full bg-primary px-4 py-2 text-[13px] font-medium text-primary-foreground shadow-sm transition-opacity hover:opacity-90 lg:block"
           >
-            Encontrar mi IA
+            {t("cta.findAI")}
           </Link>
           <button
             type="button"
             className="rounded-md p-2 text-muted-foreground md:hidden"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
-            aria-label={open ? "Cerrar menú" : "Abrir menú"}
+            aria-label={open ? t("menu.close") : t("menu.open")}
           >
             {open ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
           </button>
         </div>
       </div>
       {open && (
-        <nav className="border-t border-border bg-background px-6 py-4 md:hidden" aria-label="Navegación móvil">
+        <nav className="border-t border-border bg-background px-6 py-4 md:hidden" aria-label={site.name}>
           <ul className="space-y-3 text-sm font-medium">
             {mainNav.map((item) => (
               <li key={item.to}>
                 <Link to={item.to} onClick={() => setOpen(false)} className="block py-1">
-                  {item.label}
+                  {t(item.key as MessageKey)}
                 </Link>
               </li>
             ))}
@@ -90,7 +95,7 @@ export function Header() {
                   openSearch();
                 }}
               >
-                <Search className="size-4" aria-hidden /> Buscar
+                <Search className="size-4" aria-hidden /> {t("action.search")}
               </button>
             </li>
             <li>
@@ -99,7 +104,7 @@ export function Header() {
                 onClick={() => setOpen(false)}
                 className="mt-2 block rounded-lg bg-primary px-4 py-2 text-center text-primary-foreground"
               >
-                Encontrar mi IA
+                {t("cta.findAI")}
               </Link>
             </li>
           </ul>
