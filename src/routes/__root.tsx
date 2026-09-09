@@ -135,22 +135,24 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <div className="flex min-h-screen flex-col">
-          <a
-            href="#contenido"
-            className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[80] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:text-primary-foreground"
-          >
-            Saltar al contenido
-          </a>
-          <Header />
-          <div id="contenido" className="flex-1">
-            <Outlet />
+        <I18nProvider>
+          <div className="flex min-h-screen flex-col">
+            <a
+              href="#contenido"
+              className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[80] focus:rounded-md focus:bg-primary focus:px-4 focus:py-2 focus:text-sm focus:text-primary-foreground"
+            >
+              Saltar al contenido
+            </a>
+            <Header />
+            <div id="contenido" className="flex-1">
+              <Outlet />
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
-        <SearchDialog />
-        <CookieConsent />
-        <Toaster position="bottom-right" />
+          <SearchDialog />
+          <CookieConsent />
+          <Toaster position="bottom-right" />
+        </I18nProvider>
       </ThemeProvider>
     </QueryClientProvider>
   );
