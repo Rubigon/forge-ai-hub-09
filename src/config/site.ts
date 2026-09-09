@@ -16,9 +16,9 @@ export const site = {
 } as const;
 
 export const mainNav = [
-  { to: "/herramientas", label: "Herramientas" },
-  { to: "/comparativas", label: "Comparativas" },
-  { to: "/guias", label: "Guías" },
-  { to: "/directorio-ia", label: "Directorio" },
-  { to: "/blog", label: "Blog" },
+  { to: "/herramientas", label: "Herramientas", key: "nav.tools" },
+  { to: "/comparativas", label: "Comparativas", key: "nav.comparisons" },
+  { to: "/guias", label: "Guías", key: "nav.guides" },
+  { to: "/directorio-ia", label: "Directorio", key: "nav.directory" },
+  { to: "/blog", label: "Blog", key: "nav.blog" },
 ] as const;

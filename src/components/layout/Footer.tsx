@@ -1,45 +1,49 @@
 import { Link } from "@tanstack/react-router";
 import { site } from "@/config/site";
+import { useI18n } from "@/lib/i18n";
+import type { MessageKey } from "@/i18n/ui";
 
 const columns = [
   {
-    title: "Producto",
+    key: "footer.product" as MessageKey,
     links: [
-      { to: "/herramientas", label: "Herramientas" },
-      { to: "/comparativas", label: "Comparativas" },
-      { to: "/directorio-ia", label: "Directorio" },
-      { to: "/recursos", label: "Recursos" },
-      { to: "/precios", label: "Precios" },
+      { to: "/herramientas", key: "nav.tools" as MessageKey },
+      { to: "/comparativas", key: "nav.comparisons" as MessageKey },
+      { to: "/directorio-ia", key: "nav.directory" as MessageKey },
+      { to: "/recursos", key: "nav.resources" as MessageKey },
+      { to: "/precios", key: "nav.pricing" as MessageKey },
     ],
   },
   {
-    title: "Contenido",
+    key: "footer.content" as MessageKey,
     links: [
-      { to: "/blog", label: "Blog" },
-      { to: "/guias", label: "Guías" },
-      { to: "/tutoriales", label: "Tutoriales" },
+      { to: "/blog", key: "nav.blog" as MessageKey },
+      { to: "/guias", key: "nav.guides" as MessageKey },
+      { to: "/tutoriales", key: "nav.tutorials" as MessageKey },
     ],
   },
   {
-    title: "Empresa",
+    key: "footer.company" as MessageKey,
     links: [
-      { to: "/nosotros", label: "Nosotros" },
-      { to: "/autor", label: "Autor" },
-      { to: "/contacto", label: "Contacto" },
+      { to: "/nosotros", key: "nav.about" as MessageKey },
+      { to: "/autor", key: "nav.author" as MessageKey },
+      { to: "/contacto", key: "nav.contact" as MessageKey },
     ],
   },
   {
-    title: "Legal",
+    key: "footer.legal" as MessageKey,
     links: [
-      { to: "/politica-privacidad", label: "Privacidad" },
-      { to: "/politica-cookies", label: "Cookies" },
-      { to: "/terminos", label: "Términos" },
-      { to: "/aviso-legal", label: "Aviso legal" },
+      { to: "/politica-privacidad", key: "nav.privacy" as MessageKey },
+      { to: "/politica-cookies", key: "nav.cookies" as MessageKey },
+      { to: "/terminos", key: "nav.terms" as MessageKey },
+      { to: "/aviso-legal", key: "nav.legalNotice" as MessageKey },
     ],
   },
 ];
 
 export function Footer() {
+  const { t } = useI18n();
+
   return (
     <footer className="border-t border-border px-6 pt-20 pb-10">
       <div className="mx-auto max-w-7xl">
@@ -48,16 +52,17 @@ export function Footer() {
             <p className="mb-6 font-display text-xl font-extrabold tracking-tighter">
               AI<span className="text-muted-foreground">FORGE</span>
             </p>
-            <p className="mb-8 max-w-xs text-sm text-muted-foreground">{site.claim}</p>
+            <p className="mb-4 max-w-xs text-sm text-muted-foreground">{t("home.sub")}</p>
+            <p className="max-w-xs text-xs text-muted-foreground/70">{t("notice.partialTranslation")}</p>
           </div>
           {columns.map((col) => (
-            <nav key={col.title} aria-label={`Enlaces de ${col.title}`}>
-              <h2 className="label-mono mb-6 text-foreground">{col.title}</h2>
+            <nav key={col.key} aria-label={t("footer.links", { section: t(col.key) })}>
+              <h2 className="label-mono mb-6 text-foreground">{t(col.key)}</h2>
               <ul className="space-y-4 text-sm text-muted-foreground">
                 {col.links.map((link) => (
                   <li key={link.to}>
                     <Link to={link.to} className="transition-colors hover:text-foreground">
-                      {link.label}
+                      {t(link.key)}
                     </Link>
                   </li>
                 ))}
@@ -67,12 +72,12 @@ export function Footer() {
         </div>
         <div className="flex flex-col items-center justify-between gap-4 border-t border-border pt-10 md:flex-row">
           <p className="font-mono text-xs text-muted-foreground">
-            © {new Date().getFullYear()} AIFORGE. PROYECTO DEMO — MADRID, ES.
+            © {new Date().getFullYear()} {site.name.toUpperCase()} — MADRID, ES.
           </p>
           <div className="flex items-center gap-2">
             <span className="size-2 rounded-full bg-success" aria-hidden />
             <span className="font-mono text-[10px] uppercase tracking-tight text-muted-foreground">
-              Sistemas operativos
+              {t("footer.status")}
             </span>
           </div>
         </div>
