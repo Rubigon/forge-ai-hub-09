@@ -16,6 +16,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { site } from "@/config/site";
 import { organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import { themeInitScript, ThemeProvider } from "@/lib/theme";
+import { I18nProvider } from "@/lib/i18n";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { SearchDialog } from "@/components/SearchDialog";
