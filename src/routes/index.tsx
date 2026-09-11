@@ -122,14 +122,11 @@ function HomePage() {
         <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
           <div>
             <h2 className="mb-6 font-display text-4xl font-extrabold tracking-tight">
-              La Forja: encuentra tu IA ideal
+              {t("home.forgeTitle")}
             </h2>
-            <p className="mb-10 text-lg text-forge-muted">
-              Responde 3 preguntas y te recomendamos las herramientas que encajan con tu objetivo, presupuesto y
-              nivel — con la razón de cada recomendación.
-            </p>
+            <p className="mb-10 text-lg text-forge-muted">{t("home.forgeSub")}</p>
             <ol className="space-y-4">
-              {["Define tu objetivo principal", "Establece tu presupuesto mensual", "Elige tu nivel de experiencia"].map(
+              {[t("home.step1"), t("home.step2"), t("home.step3")].map(
                 (label, i) => (
                   <li key={label} className="flex items-center gap-4">
                     <span className="flex size-10 items-center justify-center rounded-full border border-forge-border font-mono text-xs">
