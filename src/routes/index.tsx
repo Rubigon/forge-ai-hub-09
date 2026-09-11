@@ -194,9 +194,9 @@ function HomePage() {
                 >
                   <div>
                     <p className="font-semibold group-hover:underline">{tool.name}</p>
-                    <p className="text-xs text-muted-foreground">{tool.tagline}</p>
+                    <p className="text-xs text-muted-foreground">{translateTagline(tool.slug, tool.tagline, locale)}</p>
                   </div>
-                  <span className="label-mono shrink-0 rounded bg-success/10 px-2 py-1 text-success">Gratis</span>
+                  <span className="label-mono shrink-0 rounded bg-success/10 px-2 py-1 text-success">{t("label.free")}</span>
                 </Link>
               </li>
             ))}
