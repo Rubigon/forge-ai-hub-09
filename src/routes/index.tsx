@@ -145,8 +145,8 @@ function HomePage() {
       {/* Comparativas destacadas */}
       <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="comparativas">
         <SectionHeader
-          title="Comparativas destacadas"
-          subtitle="Análisis lado a lado, con tabla y recomendación por perfil."
+          title={t("home.comparisons")}
+          subtitle={t("home.comparisonsSub")}
           linkTo="/comparativas"
         />
         <div className="grid gap-4 lg:grid-cols-2">
