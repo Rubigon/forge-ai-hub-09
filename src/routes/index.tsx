@@ -183,7 +183,7 @@ function HomePage() {
           </ul>
         </div>
         <div aria-labelledby="gratuitas">
-          <SectionHeader title="Con plan gratuito" subtitle="Empieza sin pagar nada." />
+          <SectionHeader title={t("home.freePlan")} subtitle={t("home.freePlanSub")} />
           <ul className="space-y-3">
             {freeTools.slice(0, 5).map((tool) => (
               <li key={tool.slug}>
