@@ -231,10 +231,10 @@ function HomePage() {
       {/* Artículos destacados */}
       <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="articulos">
         <SectionHeader
-          title="Artículos destacados"
-          subtitle="Guías y tutoriales revisados por personas, con fuentes citadas."
+          title={t("home.articles")}
+          subtitle={t("home.articlesSub")}
           linkTo="/blog"
-          linkLabel="VER BLOG"
+          linkLabel={t("action.viewBlog")}
         />
         <div className="grid gap-6 md:grid-cols-3">
           {featuredArticles.map((article) => (
