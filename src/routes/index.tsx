@@ -12,6 +12,8 @@ import { RecommenderWizard } from "@/components/RecommenderWizard";
 import { SectionHeader } from "@/components/SectionHeader";
 import { ToolCard } from "@/components/ToolCard";
 import { site } from "@/config/site";
+import { useI18n } from "@/lib/i18n";
+import { translateCategoryName, translateTagline } from "@/i18n/content";
 
 export const Route = createFileRoute("/")({
   head: () => ({
