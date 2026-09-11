@@ -174,7 +174,7 @@ function HomePage() {
                 >
                   <div>
                     <p className="font-semibold group-hover:underline">{tool.name}</p>
-                    <p className="text-xs text-muted-foreground">{tool.tagline}</p>
+                    <p className="text-xs text-muted-foreground">{translateTagline(tool.slug, tool.tagline, locale)}</p>
                   </div>
                   <ArrowRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1" aria-hidden />
                 </Link>
