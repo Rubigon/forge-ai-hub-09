@@ -12,6 +12,8 @@ import { RecommenderWizard } from "@/components/RecommenderWizard";
 import { SectionHeader } from "@/components/SectionHeader";
 import { ToolCard } from "@/components/ToolCard";
 import { site } from "@/config/site";
+import { useI18n } from "@/lib/i18n";
+import { translateCategoryName, translateTagline } from "@/i18n/content";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -33,29 +35,31 @@ function openSearchDialog() {
 }
 
 function HomePage() {
+  const { t, locale } = useI18n();
+
   return (
     <main>
       {/* Hero */}
       <section className="px-6 pt-24 pb-16">
         <div className="mx-auto max-w-4xl animate-fade-up text-center">
           <h1 className="mb-6 font-display text-5xl leading-[0.95] font-extrabold tracking-tight text-balance md:text-7xl">
-            Descubre todo lo que puedes hacer con IA
+            {t("home.h1")}
           </h1>
           <p className="mx-auto mb-10 max-w-2xl text-lg font-medium text-pretty text-muted-foreground">
-            Explora herramientas, aprende nuevas técnicas y encuentra la IA adecuada para cada tarea.
+            {t("home.sub")}
           </p>
           <div className="mb-14 flex flex-wrap justify-center gap-4">
             <Link
               to="/herramientas"
               className="rounded-lg bg-primary px-8 py-4 font-semibold text-primary-foreground transition-all hover:shadow-lg active:scale-95"
             >
-              Explorar herramientas
+              {t("home.exploreTools")}
             </Link>
             <Link
               to="/comparativas"
               className="rounded-lg border border-border bg-card px-8 py-4 font-semibold transition-all hover:bg-accent active:scale-95"
             >
-              Ver comparativas
+              {t("home.viewComparisons")}
             </Link>
           </div>
 
@@ -64,12 +68,10 @@ function HomePage() {
             type="button"
             onClick={openSearchDialog}
             className="group mx-auto flex w-full max-w-2xl items-center gap-4 rounded-2xl border border-border bg-card py-5 pr-6 pl-5 text-left shadow-sm transition-all hover:ring-2 hover:ring-primary/10"
-            aria-label="Abrir buscador global"
+            aria-label={t("action.searchAria")}
           >
             <Search className="size-5 shrink-0 text-muted-foreground" aria-hidden />
-            <span className="flex-1 text-muted-foreground/70">
-              Buscar herramientas, guías o comparativas…
-            </span>
+            <span className="flex-1 text-muted-foreground/70">{t("home.searchPlaceholder")}</span>
             <kbd className="rounded border border-border px-2 py-1 font-mono text-xs text-muted-foreground">⌘K</kbd>
           </button>
         </div>
@@ -78,8 +80,8 @@ function HomePage() {
       {/* Herramientas populares */}
       <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="populares">
         <SectionHeader
-          title="Herramientas populares"
-          subtitle="Las más consultadas por la comunidad. Datos demo."
+          title={t("home.popular")}
+          subtitle={t("home.popularSub")}
           linkTo="/herramientas"
         />
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
@@ -93,10 +95,10 @@ function HomePage() {
       <section className="border-y border-border bg-muted/30 px-6 py-16" aria-labelledby="utilidades">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
-            title="Utilidades de AIForge"
-            subtitle="Herramientas interactivas que funcionan en tu navegador, sin registro."
+            title={t("home.utilities")}
+            subtitle={t("home.utilitiesSub")}
             linkTo="/herramientas"
-            linkLabel="VER TODAS"
+            linkLabel={t("action.viewAll")}
           />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {interactiveApps.map((app) => (
@@ -120,14 +122,11 @@ function HomePage() {
         <div className="mx-auto grid max-w-7xl items-center gap-16 lg:grid-cols-2">
           <div>
             <h2 className="mb-6 font-display text-4xl font-extrabold tracking-tight">
-              La Forja: encuentra tu IA ideal
+              {t("home.forgeTitle")}
             </h2>
-            <p className="mb-10 text-lg text-forge-muted">
-              Responde 3 preguntas y te recomendamos las herramientas que encajan con tu objetivo, presupuesto y
-              nivel — con la razón de cada recomendación.
-            </p>
+            <p className="mb-10 text-lg text-forge-muted">{t("home.forgeSub")}</p>
             <ol className="space-y-4">
-              {["Define tu objetivo principal", "Establece tu presupuesto mensual", "Elige tu nivel de experiencia"].map(
+              {[t("home.step1"), t("home.step2"), t("home.step3")].map(
                 (label, i) => (
                   <li key={label} className="flex items-center gap-4">
                     <span className="flex size-10 items-center justify-center rounded-full border border-forge-border font-mono text-xs">
@@ -146,8 +145,8 @@ function HomePage() {
       {/* Comparativas destacadas */}
       <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="comparativas">
         <SectionHeader
-          title="Comparativas destacadas"
-          subtitle="Análisis lado a lado, con tabla y recomendación por perfil."
+          title={t("home.comparisons")}
+          subtitle={t("home.comparisonsSub")}
           linkTo="/comparativas"
         />
         <div className="grid gap-4 lg:grid-cols-2">
@@ -164,7 +163,7 @@ function HomePage() {
       {/* Novedades y gratuitas */}
       <section className="mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-2">
         <div aria-labelledby="nuevas">
-          <SectionHeader title="Recién llegadas" subtitle="Últimas incorporaciones al directorio." />
+          <SectionHeader title={t("home.new")} subtitle={t("home.newSub")} />
           <ul className="space-y-3">
             {newTools.map((tool) => (
               <li key={tool.slug}>
@@ -175,7 +174,7 @@ function HomePage() {
                 >
                   <div>
                     <p className="font-semibold group-hover:underline">{tool.name}</p>
-                    <p className="text-xs text-muted-foreground">{tool.tagline}</p>
+                    <p className="text-xs text-muted-foreground">{translateTagline(tool.slug, tool.tagline, locale)}</p>
                   </div>
                   <ArrowRight className="size-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-1" aria-hidden />
                 </Link>
@@ -184,7 +183,7 @@ function HomePage() {
           </ul>
         </div>
         <div aria-labelledby="gratuitas">
-          <SectionHeader title="Con plan gratuito" subtitle="Empieza sin pagar nada." />
+          <SectionHeader title={t("home.freePlan")} subtitle={t("home.freePlanSub")} />
           <ul className="space-y-3">
             {freeTools.slice(0, 5).map((tool) => (
               <li key={tool.slug}>
@@ -195,9 +194,9 @@ function HomePage() {
                 >
                   <div>
                     <p className="font-semibold group-hover:underline">{tool.name}</p>
-                    <p className="text-xs text-muted-foreground">{tool.tagline}</p>
+                    <p className="text-xs text-muted-foreground">{translateTagline(tool.slug, tool.tagline, locale)}</p>
                   </div>
-                  <span className="label-mono shrink-0 rounded bg-success/10 px-2 py-1 text-success">Gratis</span>
+                  <span className="label-mono shrink-0 rounded bg-success/10 px-2 py-1 text-success">{t("label.free")}</span>
                 </Link>
               </li>
             ))}
@@ -208,7 +207,7 @@ function HomePage() {
       {/* Categorías */}
       <section className="border-y border-border bg-muted/30 px-6 py-16" aria-labelledby="categorias">
         <div className="mx-auto max-w-7xl">
-          <SectionHeader title="Explora por categoría" linkTo="/directorio-ia" linkLabel="DIRECTORIO COMPLETO" />
+          <SectionHeader title={t("home.categories")} linkTo="/directorio-ia" linkLabel={t("action.fullDirectory")} />
           <ul className="flex flex-wrap gap-2">
             {categories.map((cat) => {
               const count = tools.filter((t) => t.category === cat.slug).length;
@@ -219,7 +218,7 @@ function HomePage() {
                     search={{ categoria: cat.slug }}
                     className="flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-medium transition-colors hover:bg-accent"
                   >
-                    {cat.name}
+                    {translateCategoryName(cat.slug, cat.name, locale)}
                     <span className="font-mono text-[10px] text-muted-foreground">{count}</span>
                   </Link>
                 </li>
@@ -232,10 +231,10 @@ function HomePage() {
       {/* Artículos destacados */}
       <section className="mx-auto max-w-7xl px-6 py-16" aria-labelledby="articulos">
         <SectionHeader
-          title="Artículos destacados"
-          subtitle="Guías y tutoriales revisados por personas, con fuentes citadas."
+          title={t("home.articles")}
+          subtitle={t("home.articlesSub")}
           linkTo="/blog"
-          linkLabel="VER BLOG"
+          linkLabel={t("action.viewBlog")}
         />
         <div className="grid gap-6 md:grid-cols-3">
           {featuredArticles.map((article) => (

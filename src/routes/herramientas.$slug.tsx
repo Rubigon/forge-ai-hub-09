@@ -6,6 +6,9 @@ import { comparisonsForTool } from "@/data/comparisons";
 import { breadcrumbJsonLd, formatDate, softwareApplicationJsonLd } from "@/lib/seo";
 import { AdSlot } from "@/components/AdSlot";
 import { AppPage } from "@/components/AppPage";
+import { useI18n } from "@/lib/i18n";
+import { translateCategoryName, translateTagline } from "@/i18n/content";
+import { categoryBySlug } from "@/data/categories";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ComparisonCard } from "@/components/ComparisonCard";
 import { RelatedContent } from "@/components/RelatedContent";
@@ -104,6 +107,7 @@ function SlugPage() {
 
 function ToolDetail({ tool }: { tool: Tool }) {
   const comparisons = comparisonsForTool(tool.slug);
+  const { locale } = useI18n();
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-12">
@@ -122,9 +126,9 @@ function ToolDetail({ tool }: { tool: Tool }) {
               {tool.initials}
             </div>
             <div className="min-w-0 flex-1">
-              <p className="label-mono mb-2 text-muted-foreground">{tool.category}</p>
+              <p className="label-mono mb-2 text-muted-foreground">{translateCategoryName(tool.category, categoryBySlug(tool.category)?.name ?? tool.category, locale)}</p>
               <h1 className="mb-2 font-display text-4xl font-extrabold tracking-tight">{tool.name}</h1>
-              <p className="text-lg text-muted-foreground">{tool.tagline}</p>
+              <p className="text-lg text-muted-foreground">{translateTagline(tool.slug, tool.tagline, locale)}</p>
             </div>
           </header>
 

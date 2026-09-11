@@ -1,4 +1,5 @@
 import type { Locale } from "@/lib/i18n";
+import { esTool, toolMessages } from "./ui-tool";
 
 /** Claves de interfaz. El español es la base; el resto cae a español si falta una clave. */
 const es = {
@@ -70,7 +71,7 @@ const es = {
     "Interfaz y fichas traducidas. Los artículos y guías largas se mantienen en español.",
 };
 
-export type MessageKey = keyof typeof es;
+export type MessageKey = keyof typeof es | keyof typeof esTool;
 type Dict = Partial<Record<MessageKey, string>>;
 
 const en: Dict = {
@@ -361,6 +362,8 @@ const ru: Dict = {
   "notice.partialTranslation": "Интерфейс и карточки переведены. Длинные статьи и руководства остаются на испанском.",
 };
 
-export const messages: Record<Locale, Record<string, string>> & { es: typeof es } = {
-  es, en, pt, ja, zh, hi, ar, fr, de, ru,
-};
+const base: Record<Locale, Record<string, string>> = { es, en, pt, ja, zh, hi, ar, fr, de, ru };
+
+export const messages = Object.fromEntries(
+  Object.entries(base).map(([loc, dict]) => [loc, { ...dict, ...toolMessages[loc as Locale] }]),
+) as Record<Locale, Record<string, string>>;
