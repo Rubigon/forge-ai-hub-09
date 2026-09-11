@@ -95,10 +95,10 @@ function HomePage() {
       <section className="border-y border-border bg-muted/30 px-6 py-16" aria-labelledby="utilidades">
         <div className="mx-auto max-w-7xl">
           <SectionHeader
-            title="Utilidades de AIForge"
-            subtitle="Herramientas interactivas que funcionan en tu navegador, sin registro."
+            title={t("home.utilities")}
+            subtitle={t("home.utilitiesSub")}
             linkTo="/herramientas"
-            linkLabel="VER TODAS"
+            linkLabel={t("action.viewAll")}
           />
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {interactiveApps.map((app) => (
