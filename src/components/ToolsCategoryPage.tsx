@@ -1,5 +1,7 @@
 import { useMemo, useState } from "react";
 import { categories, categoryBySlug } from "@/data/categories";
+import { useI18n } from "@/lib/i18n";
+import { translateCategoryName } from "@/i18n/content";
 import { pricingLabels, tools, toolsByCategory } from "@/data/tools";
 import { interactiveApps } from "@/data/apps";
 import { ToolCard } from "@/components/ToolCard";
@@ -115,7 +117,7 @@ export function ToolsCategoryPage({
                     search={{ categoria: cat.slug }}
                     className="block rounded-xl border border-border bg-card p-4 transition-shadow hover:shadow-lg"
                   >
-                    <p className="text-sm font-semibold">{cat.name}</p>
+                    <p className="text-sm font-semibold">{translateCategoryName(cat.slug, cat.name, locale)}</p>
                     <p className="font-mono text-[10px] text-muted-foreground">
                       {count} herramienta{count === 1 ? "" : "s"}
                     </p>

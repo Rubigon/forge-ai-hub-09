@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { categories, categoryBySlug } from "@/data/categories";
+import { useI18n } from "@/lib/i18n";
+import { translateCategoryName } from "@/i18n/content";
 import { pricingLabels, tools } from "@/data/tools";
 import { ToolCard } from "@/components/ToolCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
@@ -104,7 +106,7 @@ function Directorio() {
                         : "text-muted-foreground hover:text-foreground",
                     )}
                   >
-                    {cat.name}
+                    {translateCategoryName(cat.slug, cat.name, locale)}
                   </Link>
                 </li>
               ))}
