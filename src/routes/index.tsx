@@ -35,29 +35,31 @@ function openSearchDialog() {
 }
 
 function HomePage() {
+  const { t, locale } = useI18n();
+
   return (
     <main>
       {/* Hero */}
       <section className="px-6 pt-24 pb-16">
         <div className="mx-auto max-w-4xl animate-fade-up text-center">
           <h1 className="mb-6 font-display text-5xl leading-[0.95] font-extrabold tracking-tight text-balance md:text-7xl">
-            Descubre todo lo que puedes hacer con IA
+            {t("home.h1")}
           </h1>
           <p className="mx-auto mb-10 max-w-2xl text-lg font-medium text-pretty text-muted-foreground">
-            Explora herramientas, aprende nuevas técnicas y encuentra la IA adecuada para cada tarea.
+            {t("home.sub")}
           </p>
           <div className="mb-14 flex flex-wrap justify-center gap-4">
             <Link
               to="/herramientas"
               className="rounded-lg bg-primary px-8 py-4 font-semibold text-primary-foreground transition-all hover:shadow-lg active:scale-95"
             >
-              Explorar herramientas
+              {t("home.exploreTools")}
             </Link>
             <Link
               to="/comparativas"
               className="rounded-lg border border-border bg-card px-8 py-4 font-semibold transition-all hover:bg-accent active:scale-95"
             >
-              Ver comparativas
+              {t("home.viewComparisons")}
             </Link>
           </div>
 
@@ -66,12 +68,10 @@ function HomePage() {
             type="button"
             onClick={openSearchDialog}
             className="group mx-auto flex w-full max-w-2xl items-center gap-4 rounded-2xl border border-border bg-card py-5 pr-6 pl-5 text-left shadow-sm transition-all hover:ring-2 hover:ring-primary/10"
-            aria-label="Abrir buscador global"
+            aria-label={t("action.searchAria")}
           >
             <Search className="size-5 shrink-0 text-muted-foreground" aria-hidden />
-            <span className="flex-1 text-muted-foreground/70">
-              Buscar herramientas, guías o comparativas…
-            </span>
+            <span className="flex-1 text-muted-foreground/70">{t("home.searchPlaceholder")}</span>
             <kbd className="rounded border border-border px-2 py-1 font-mono text-xs text-muted-foreground">⌘K</kbd>
           </button>
         </div>
