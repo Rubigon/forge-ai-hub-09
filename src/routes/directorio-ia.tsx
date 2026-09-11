@@ -61,6 +61,7 @@ export const Route = createFileRoute("/directorio-ia")({
 
 function Directorio() {
   const { categoria, precio } = Route.useSearch();
+  const { locale } = useI18n();
 
   const filtered = useMemo(
     () => tools.filter((t) => (!categoria || t.category === categoria) && (!precio || t.pricing === precio)),

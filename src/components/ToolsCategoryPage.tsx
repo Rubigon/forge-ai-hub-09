@@ -23,6 +23,7 @@ export function ToolsCategoryPage({
   description: string;
 }) {
   const [pricing, setPricing] = useState<PricingModel | "todas">("todas");
+  const { locale } = useI18n();
 
   const filtered = useMemo(() => {
     const base = categorySlug ? toolsByCategory(categorySlug) : tools;
