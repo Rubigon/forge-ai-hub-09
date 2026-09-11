@@ -207,7 +207,7 @@ function HomePage() {
       {/* Categorías */}
       <section className="border-y border-border bg-muted/30 px-6 py-16" aria-labelledby="categorias">
         <div className="mx-auto max-w-7xl">
-          <SectionHeader title="Explora por categoría" linkTo="/directorio-ia" linkLabel="DIRECTORIO COMPLETO" />
+          <SectionHeader title={t("home.categories")} linkTo="/directorio-ia" linkLabel={t("action.fullDirectory")} />
           <ul className="flex flex-wrap gap-2">
             {categories.map((cat) => {
               const count = tools.filter((t) => t.category === cat.slug).length;
