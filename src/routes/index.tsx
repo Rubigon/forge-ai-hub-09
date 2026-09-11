@@ -163,7 +163,7 @@ function HomePage() {
       {/* Novedades y gratuitas */}
       <section className="mx-auto grid max-w-7xl gap-12 px-6 py-16 lg:grid-cols-2">
         <div aria-labelledby="nuevas">
-          <SectionHeader title="Recién llegadas" subtitle="Últimas incorporaciones al directorio." />
+          <SectionHeader title={t("home.new")} subtitle={t("home.newSub")} />
           <ul className="space-y-3">
             {newTools.map((tool) => (
               <li key={tool.slug}>
