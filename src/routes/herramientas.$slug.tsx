@@ -107,14 +107,14 @@ function SlugPage() {
 
 function ToolDetail({ tool }: { tool: Tool }) {
   const comparisons = comparisonsForTool(tool.slug);
-  const { locale } = useI18n();
+  const { locale, t } = useI18n();
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-12">
       <Breadcrumbs
         crumbs={[
-          { name: "Inicio", url: "/" },
-          { name: "Herramientas", url: "/herramientas" },
+          { name: t("nav.home"), url: "/" },
+          { name: t("nav.tools"), url: "/herramientas" },
           { name: tool.name, url: `/herramientas/${tool.slug}` },
         ]}
       />
@@ -134,12 +134,12 @@ function ToolDetail({ tool }: { tool: Tool }) {
 
           <dl className="mb-10 grid grid-cols-2 gap-px overflow-hidden rounded-xl bg-border sm:grid-cols-3">
             {[
-              { k: "Modelo", v: pricingLabels[tool.pricing] },
-              { k: "Precio", v: tool.priceNote },
-              { k: "Plan gratis", v: tool.freeTier ? "Sí" : "No" },
-              { k: "Nivel", v: difficultyLabel(tool) },
-              { k: "API", v: hasApi(tool.slug) ? "Sí" : "No" },
-              { k: "Ideal para", v: audienceFor(tool).join(", ") },
+              { k: t("tool.model"), v: pricingLabels[tool.pricing] },
+              { k: t("tool.price"), v: tool.priceNote },
+              { k: t("tool.freePlan"), v: tool.freeTier ? t("tool.yes") : t("tool.no") },
+              { k: t("tool.level"), v: difficultyLabel(tool) },
+              { k: t("tool.api"), v: hasApi(tool.slug) ? t("tool.yes") : t("tool.no") },
+              { k: t("tool.idealFor"), v: audienceFor(tool).join(", ") },
             ].map((item) => (
               <div key={item.k} className="bg-card p-4">
                 <dt className="label-mono mb-1 text-muted-foreground">{item.k}</dt>
@@ -150,7 +150,7 @@ function ToolDetail({ tool }: { tool: Tool }) {
 
           <section className="prose-block mb-10" aria-labelledby="que-es">
             <h2 id="que-es" className="mb-3 font-display text-2xl font-bold tracking-tight">
-              Qué es {tool.name}
+              {t("tool.what", { name: tool.name })}
             </h2>
             <p className="leading-relaxed text-muted-foreground">{tool.description}</p>
           </section>
@@ -159,7 +159,7 @@ function ToolDetail({ tool }: { tool: Tool }) {
 
           <section className="mb-10" aria-labelledby="funciones">
             <h2 id="funciones" className="mb-4 font-display text-2xl font-bold tracking-tight">
-              Funciones principales
+              {t("tool.features")}
             </h2>
             <ul className="grid gap-2 sm:grid-cols-2">
               {tool.features.map((f) => (
@@ -173,10 +173,10 @@ function ToolDetail({ tool }: { tool: Tool }) {
 
           <section className="mb-10 grid gap-6 sm:grid-cols-2" aria-labelledby="pros-contras">
             <h2 id="pros-contras" className="sr-only">
-              Ventajas y limitaciones
+              {`${t("tool.pros")} / ${t("tool.cons")}`}
             </h2>
             <div className="rounded-xl border border-border p-5">
-              <p className="label-mono mb-4 text-muted-foreground">Ventajas</p>
+              <p className="label-mono mb-4 text-muted-foreground">{t("tool.pros")}</p>
               <ul className="space-y-2 text-sm">
                 {tool.pros.map((p) => (
                   <li key={p} className="flex gap-2">
@@ -187,7 +187,7 @@ function ToolDetail({ tool }: { tool: Tool }) {
               </ul>
             </div>
             <div className="rounded-xl border border-border p-5">
-              <p className="label-mono mb-4 text-muted-foreground">Limitaciones</p>
+              <p className="label-mono mb-4 text-muted-foreground">{t("tool.cons")}</p>
               <ul className="space-y-2 text-sm">
                 {tool.cons.map((c) => (
                   <li key={c} className="flex gap-2">
@@ -201,7 +201,7 @@ function ToolDetail({ tool }: { tool: Tool }) {
 
           <section className="mb-10" aria-labelledby="casos-uso">
             <h2 id="casos-uso" className="mb-4 font-display text-2xl font-bold tracking-tight">
-              Casos de uso reales
+              {t("tool.useCases")}
             </h2>
             <ol className="space-y-3">
               {tool.useCases.map((u, i) => (
@@ -216,7 +216,7 @@ function ToolDetail({ tool }: { tool: Tool }) {
           {comparisons.length > 0 && (
             <section className="mb-10" aria-labelledby="comparativas-tool">
               <h2 id="comparativas-tool" className="mb-4 font-display text-2xl font-bold tracking-tight">
-                Comparativas con {tool.name}
+                {t("tool.comparisons", { name: tool.name })}
               </h2>
               <div className="grid gap-4 sm:grid-cols-2">
                 {comparisons.map((c) => (
@@ -233,7 +233,7 @@ function ToolDetail({ tool }: { tool: Tool }) {
 
           <section className="mb-10" aria-labelledby="fuentes">
             <h2 id="fuentes" className="mb-4 font-display text-2xl font-bold tracking-tight">
-              Fuentes consultadas
+              {t("tool.sources")}
             </h2>
             <ul className="space-y-2 text-sm">
               {sourcesFor(tool).map((source) => (
@@ -259,20 +259,20 @@ function ToolDetail({ tool }: { tool: Tool }) {
           <div className="sticky top-24 space-y-6">
             <ScorePanel tool={tool} />
             <div className="rounded-xl border border-border p-5">
-              <p className="label-mono mb-3 text-muted-foreground">Acceso</p>
+              <p className="label-mono mb-3 text-muted-foreground">{t("tool.access")}</p>
               <a
                 href={tool.officialUrl}
                 target="_blank"
                 rel="noopener noreferrer nofollow sponsored"
                 className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90"
               >
-                Ir a la web oficial <ArrowUpRight className="size-4" aria-hidden />
+                {t("tool.official")} <ArrowUpRight className="size-4" aria-hidden />
               </a>
-              <p className="mt-3 text-xs text-muted-foreground">Enlace externo. AIForge no gestiona esta plataforma.</p>
+              <p className="mt-3 text-xs text-muted-foreground">{t("tool.externalNote")}</p>
             </div>
             {tool.alternatives.length > 0 && (
-              <nav className="rounded-xl border border-border p-5" aria-label="Alternativas">
-                <p className="label-mono mb-3 text-muted-foreground">Alternativas</p>
+              <nav className="rounded-xl border border-border p-5" aria-label={t("tool.alternatives")}>
+                <p className="label-mono mb-3 text-muted-foreground">{t("tool.alternatives")}</p>
                 <ul className="space-y-2 text-sm">
                   {tool.alternatives.map((alt) => {
                     const altTool = toolBySlug(alt);
