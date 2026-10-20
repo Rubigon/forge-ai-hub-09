@@ -16,6 +16,7 @@ const CAUSE_DEPTH_LIMIT = 5;
 const DESCRIPTION_LENGTH_LIMIT = 8_000;
 
 export function describeError(error: unknown): string {
+  if (error instanceof Response) return `HTTP Response ${error.status}`;
   const parts: string[] = [];
   let current: unknown = error;
   for (let depth = 0; depth < CAUSE_DEPTH_LIMIT && current != null; depth++) {
@@ -39,7 +40,7 @@ function describeStatus(error: Error): string {
 
 function safeStringify(value: unknown): string {
   try {
-    return JSON.stringify(value) ?? String(value);
+    return JSON.stringify(value, (key, item) => /authorization|api.?key|token|password|secret/i.test(key) ? "[REDACTED]" : item) ?? String(value);
   } catch {
     return String(value);
   }

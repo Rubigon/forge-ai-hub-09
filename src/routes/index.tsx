@@ -1,10 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Search } from "lucide-react";
-import { articles, articleUrl, featuredArticles } from "@/data/articles";
 import { categories } from "@/data/categories";
 import { comparisons } from "@/data/comparisons";
-import { interactiveApps } from "@/data/apps";
-import { freeTools, newTools, popularTools, tools } from "@/data/tools";
+import { catalogQueryOptions, useCatalog } from "@/lib/catalog";
 import { AdSlot } from "@/components/AdSlot";
 import { ArticleCard } from "@/components/ArticleCard";
 import { ComparisonCard } from "@/components/ComparisonCard";
@@ -16,6 +14,7 @@ import { useI18n } from "@/lib/i18n";
 import { translateCategoryName, translateTagline } from "@/i18n/content";
 
 export const Route = createFileRoute("/")({
+  loader: ({ context }) => context.queryClient.ensureQueryData(catalogQueryOptions()),
   head: () => ({
     meta: [
       { title: `${site.name} | Herramientas, comparativas y recursos de Inteligencia Artificial` },
@@ -23,6 +22,7 @@ export const Route = createFileRoute("/")({
       { property: "og:title", content: `${site.name} | Herramientas y recursos de IA` },
       { property: "og:description", content: site.description },
       { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { property: "og:url", content: "/" },
     ],
     links: [{ rel: "canonical", href: "/" }],
@@ -36,6 +36,11 @@ function openSearchDialog() {
 
 function HomePage() {
   const { t, locale } = useI18n();
+  const { tools, apps: interactiveApps, articles } = useCatalog();
+  const popularTools = tools.filter((tool) => tool.isPopular);
+  const newTools = tools.filter((tool) => tool.isNew);
+  const freeTools = tools.filter((tool) => tool.pricing === "gratis" || tool.freeTier);
+  const featuredArticles = articles.filter((article) => article.featured);
 
   return (
     <main>

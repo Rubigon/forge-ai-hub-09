@@ -3,7 +3,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { categories, categoryBySlug } from "@/data/categories";
 import { useI18n } from "@/lib/i18n";
 import { translateCategoryName } from "@/i18n/content";
-import { pricingLabels, tools } from "@/data/tools";
+import { pricingLabels } from "@/data/tools";
+import { catalogQueryOptions, useCatalog } from "@/lib/catalog";
 import { ToolCard } from "@/components/ToolCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { AdSlot } from "@/components/AdSlot";
@@ -17,6 +18,7 @@ const categorySlugs = categories.map((c) => c.slug) as string[];
 const pricingValues: PricingModel[] = ["gratis", "freemium", "pago"];
 
 export const Route = createFileRoute("/directorio-ia")({
+  loader: ({ context }) => context.queryClient.ensureQueryData(catalogQueryOptions()),
   validateSearch: (search: Record<string, unknown>): DirectorySearch => ({
     categoria: categorySlugs.includes(String(search['categoria'])) ? (search['categoria'] as CategorySlug) : undefined,
     precio: pricingValues.includes(search['precio'] as PricingModel) ? (search['precio'] as PricingModel) : undefined,
@@ -60,12 +62,13 @@ export const Route = createFileRoute("/directorio-ia")({
 });
 
 function Directorio() {
+  const { tools } = useCatalog();
   const { categoria, precio } = Route.useSearch();
   const { locale } = useI18n();
 
   const filtered = useMemo(
     () => tools.filter((t) => (!categoria || t.category === categoria) && (!precio || t.pricing === precio)),
-    [categoria, precio],
+    [tools, categoria, precio],
   );
 
   return (

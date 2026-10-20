@@ -8,3 +8,7 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Primary catalog UI uses the asynchronous catalogService adapter and shared TanStack Query cache; static exports remain for pure search/SEO compatibility.
+- AIProvider is a browser streaming facade; AI instructions, model selection and credentials stay behind the same-origin TanStack server route to avoid credential exposure.
+- AI access denials are persisted in a service-only circuit-breaker table; restore access and explicitly clear the block before a fresh user request, never retry denied work automatically.
