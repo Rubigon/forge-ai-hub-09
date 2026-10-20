@@ -13,3 +13,9 @@
 - [x] Verificación: tipos OK, 21 tests OK, rutas clave responden 200
 
 Pendiente (fuera de Prioridad 1): newsletter, prioridades 2 y 3 del documento V3.
+
+# Robustez para el TFM
+- [ ] Servicio asíncrono del catálogo e integración con la interfaz.
+- [ ] Prompt Optimizer con IA real y clave exclusivamente en servidor.
+- [ ] Errores controlados, cancelación y notificaciones.
+- [ ] Tests y comprobación del flujo real.
