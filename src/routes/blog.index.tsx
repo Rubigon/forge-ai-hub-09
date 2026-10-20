@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { catalogQueryOptions } from "@/lib/catalog";
 import { ArticleListPage } from "@/components/ArticlePage";
 
 export const Route = createFileRoute("/blog/")({
+  loader: ({ context }) => context.queryClient.ensureQueryData(catalogQueryOptions()),
   head: () => ({
     meta: [
       { title: "Blog de inteligencia artificial y productividad — AIForge" },

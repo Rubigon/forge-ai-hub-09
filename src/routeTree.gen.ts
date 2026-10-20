@@ -34,6 +34,7 @@ import { Route as HerramientasIndexRouteImport } from './routes/herramientas.ind
 import { Route as HerramientasSlugRouteImport } from './routes/herramientas.$slug'
 import { Route as TutorialesIndexRouteImport } from './routes/tutoriales.index'
 import { Route as TutorialesSlugRouteImport } from './routes/tutoriales.$slug'
+import { Route as ApiAiOptimizeRouteImport } from './routes/api/ai/optimize'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -160,6 +161,11 @@ const TutorialesSlugRoute = TutorialesSlugRouteImport.update({
   path: '/tutoriales/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAiOptimizeRoute = ApiAiOptimizeRouteImport.update({
+  id: '/api/ai/optimize',
+  path: '/api/ai/optimize',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -187,6 +193,7 @@ export interface FileRoutesByFullPath {
   '/guias/': typeof GuiasIndexRoute
   '/herramientas/': typeof HerramientasIndexRoute
   '/tutoriales/': typeof TutorialesIndexRoute
+  '/api/ai/optimize': typeof ApiAiOptimizeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -214,6 +221,7 @@ export interface FileRoutesByTo {
   '/guias': typeof GuiasIndexRoute
   '/herramientas': typeof HerramientasIndexRoute
   '/tutoriales': typeof TutorialesIndexRoute
+  '/api/ai/optimize': typeof ApiAiOptimizeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -242,6 +250,7 @@ export interface FileRoutesById {
   '/guias/': typeof GuiasIndexRoute
   '/herramientas/': typeof HerramientasIndexRoute
   '/tutoriales/': typeof TutorialesIndexRoute
+  '/api/ai/optimize': typeof ApiAiOptimizeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -271,6 +280,7 @@ export interface FileRouteTypes {
     | '/guias/'
     | '/herramientas/'
     | '/tutoriales/'
+    | '/api/ai/optimize'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -298,6 +308,7 @@ export interface FileRouteTypes {
     | '/guias'
     | '/herramientas'
     | '/tutoriales'
+    | '/api/ai/optimize'
   id:
     | '__root__'
     | '/'
@@ -325,6 +336,7 @@ export interface FileRouteTypes {
     | '/guias/'
     | '/herramientas/'
     | '/tutoriales/'
+    | '/api/ai/optimize'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -353,6 +365,7 @@ export interface RootRouteChildren {
   GuiasIndexRoute: typeof GuiasIndexRoute
   HerramientasIndexRoute: typeof HerramientasIndexRoute
   TutorialesIndexRoute: typeof TutorialesIndexRoute
+  ApiAiOptimizeRoute: typeof ApiAiOptimizeRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -532,6 +545,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TutorialesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/ai/optimize': {
+      id: '/api/ai/optimize'
+      path: '/api/ai/optimize'
+      fullPath: '/api/ai/optimize'
+      preLoaderRoute: typeof ApiAiOptimizeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -561,6 +581,7 @@ const rootRouteChildren: RootRouteChildren = {
   GuiasIndexRoute: GuiasIndexRoute,
   HerramientasIndexRoute: HerramientasIndexRoute,
   TutorialesIndexRoute: TutorialesIndexRoute,
+  ApiAiOptimizeRoute: ApiAiOptimizeRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

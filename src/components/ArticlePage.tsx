@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { Link, notFound } from "@tanstack/react-router";
 import { ArrowLeft, Clock } from "lucide-react";
-import { articleBasePath, articlesByType, articleBySlug, articleUrl } from "@/data/articles";
+import { articleBasePath, articleBySlug, articleUrl } from "@/data/articles";
+import { useCatalog } from "@/lib/catalog";
 import { articleJsonLd, breadcrumbJsonLd, formatDate } from "@/lib/seo";
 import { trackEvent } from "@/lib/analytics";
 import { AdSlot } from "@/components/AdSlot";
@@ -58,7 +59,8 @@ export function ArticleListPage({
   title: string;
   description: string;
 }) {
-  const list = articlesByType(type);
+  const { articles } = useCatalog();
+  const list = articles.filter((article) => article.type === type);
   return (
     <main className="mx-auto max-w-7xl px-6 py-12">
       <Breadcrumbs crumbs={[{ name: "Inicio", url: "/" }, { name: title, url: articleBasePath[type] }]} />

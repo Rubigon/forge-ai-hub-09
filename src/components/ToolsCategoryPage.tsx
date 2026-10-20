@@ -2,8 +2,8 @@ import { useMemo, useState } from "react";
 import { categories, categoryBySlug } from "@/data/categories";
 import { useI18n } from "@/lib/i18n";
 import { translateCategoryName } from "@/i18n/content";
-import { pricingLabels, tools, toolsByCategory } from "@/data/tools";
-import { interactiveApps } from "@/data/apps";
+import { pricingLabels } from "@/data/tools";
+import { useCatalog } from "@/lib/catalog";
 import { ToolCard } from "@/components/ToolCard";
 import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { cn } from "@/lib/utils";
@@ -24,11 +24,12 @@ export function ToolsCategoryPage({
 }) {
   const [pricing, setPricing] = useState<PricingModel | "todas">("todas");
   const { locale } = useI18n();
+  const { tools, apps: interactiveApps } = useCatalog();
 
   const filtered = useMemo(() => {
-    const base = categorySlug ? toolsByCategory(categorySlug) : tools;
+    const base = categorySlug ? tools.filter((tool) => tool.category === categorySlug) : tools;
     return pricing === "todas" ? base : base.filter((t) => t.pricing === pricing);
-  }, [categorySlug, pricing]);
+  }, [tools, categorySlug, pricing]);
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-12">
@@ -84,7 +85,7 @@ export function ToolsCategoryPage({
             Utilidades interactivas de AIForge
           </h2>
           <p className="mb-8 text-sm text-muted-foreground">
-            Herramientas propias que funcionan en tu navegador. Gratuitas y sin registro.
+            Utilidades de AIForge para trabajar con texto, código e inteligencia artificial.
           </p>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {interactiveApps.map((app) => (
@@ -110,7 +111,7 @@ export function ToolsCategoryPage({
           </h2>
           <ul className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
             {categories.map((cat) => {
-              const count = toolsByCategory(cat.slug).length;
+              const count = tools.filter((tool) => tool.category === cat.slug).length;
               return (
                 <li key={cat.slug}>
                   <Link

@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ToolsCategoryPage } from "@/components/ToolsCategoryPage";
 import { breadcrumbJsonLd } from "@/lib/seo";
+import { catalogQueryOptions } from "@/lib/catalog";
 
 export const Route = createFileRoute("/herramientas/")({
+  loader: ({ context }) => context.queryClient.ensureQueryData(catalogQueryOptions()),
   head: () => ({
     meta: [
       { title: "Herramientas de IA analizadas y utilidades gratuitas — AIForge" },

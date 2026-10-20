@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { ArrowUpRight, Check, X } from "lucide-react";
 import { toolBySlug, pricingLabels } from "@/data/tools";
 import { appBySlug } from "@/data/apps";
+import { catalogQueryOptions, useCatalog } from "@/lib/catalog";
 import { comparisonsForTool } from "@/data/comparisons";
 import { breadcrumbJsonLd, formatDate, softwareApplicationJsonLd } from "@/lib/seo";
 import { AdSlot } from "@/components/AdSlot";
@@ -35,9 +36,10 @@ const appComponents: Record<string, () => React.JSX.Element> = {
 };
 
 export const Route = createFileRoute("/herramientas/$slug")({
-  loader: ({ params }) => {
-    const app = appBySlug(params.slug);
-    const tool = toolBySlug(params.slug);
+  loader: async ({ params, context }) => {
+    const catalog = await context.queryClient.ensureQueryData(catalogQueryOptions());
+    const app = catalog.apps.find((item) => item.slug === params.slug);
+    const tool = catalog.tools.find((item) => item.slug === params.slug);
     if (!app && !tool) throw notFound();
     return { slug: params.slug };
   },
@@ -93,14 +95,15 @@ export const Route = createFileRoute("/herramientas/$slug")({
 
 function SlugPage() {
   const { slug } = Route.useLoaderData();
-  const app = appBySlug(slug);
+  const catalog = useCatalog();
+  const app = catalog.apps.find((item) => item.slug === slug);
 
   if (app) {
     const AppComponent = appComponents[app.slug];
     return <AppPage app={app}>{AppComponent ? <AppComponent /> : <p>Utilidad en preparación.</p>}</AppPage>;
   }
 
-  const tool = toolBySlug(slug);
+  const tool = catalog.tools.find((item) => item.slug === slug);
   if (!tool) return null;
   return <ToolDetail tool={tool} />;
 }
