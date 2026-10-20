@@ -1,7 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { catalogQueryOptions } from "@/lib/catalog";
 import { ArticleListPage } from "@/components/ArticlePage";
 
 export const Route = createFileRoute("/guias/")({
+  loader: ({ context }) => context.queryClient.ensureQueryData(catalogQueryOptions()),
   head: () => ({
     meta: [
       { title: "Guías completas de IA: prompts, modelos y automatización — AIForge" },
