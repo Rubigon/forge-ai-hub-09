@@ -15,7 +15,7 @@
 Pendiente (fuera de Prioridad 1): newsletter, prioridades 2 y 3 del documento V3.
 
 # Robustez para el TFM
-- [ ] Servicio asíncrono del catálogo e integración con la interfaz.
-- [ ] Prompt Optimizer con IA real y clave exclusivamente en servidor.
-- [ ] Errores controlados, cancelación y notificaciones.
-- [ ] Tests y comprobación del flujo real.
+- [x] Servicio asíncrono del catálogo e integración con la interfaz.
+- [x] Prompt Optimizer con IA real y clave exclusivamente en servidor.
+- [x] Errores controlados, cancelación y notificaciones.
+- [x] Tests y comprobación del flujo real: 33 tests; respuesta real del optimizador; errores 401/429/503 conservan el texto; rutas principales HTTP 200.
