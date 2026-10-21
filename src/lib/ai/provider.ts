@@ -26,7 +26,7 @@ export const aiProvider: AIProvider = {
   async complete({ messages, signal, onDelta }) {
     try {
       const response = await fetch("/api/ai/optimize", {
-        method: "POST", signal,
+        method: "POST", signal: signal ?? null,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt: messages.filter((m) => m.role === "user").map((m) => m.content).join("\n") }),
       });
