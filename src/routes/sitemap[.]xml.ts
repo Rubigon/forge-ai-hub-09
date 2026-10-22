@@ -12,6 +12,9 @@ const staticPages = [
   "/guias",
   "/directorio-ia",
   "/blog",
+  "/aviso-legal",
+  "/politica-privacidad",
+  "/contacto",
 ];
 
 export const Route = createFileRoute("/sitemap.xml")({
