@@ -1,4 +1,6 @@
 import type { ContentBlock } from "@/types";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 /** Renderiza los bloques estructurados de un artículo con tipografía editorial. */
 export function ArticleRenderer({ blocks }: { blocks: ContentBlock[] }) {
@@ -6,6 +8,19 @@ export function ArticleRenderer({ blocks }: { blocks: ContentBlock[] }) {
     <div className="max-w-none">
       {blocks.map((block, i) => {
         switch (block.type) {
+          case "markdown":
+            return <ReactMarkdown key={i} remarkPlugins={[remarkGfm]} components={{
+              h2: ({ children }) => <h2 id={slugify(String(children))} className="mt-12 mb-4 scroll-mt-24 font-display text-2xl font-extrabold">{children}</h2>,
+              h3: ({ children }) => <h3 className="mt-8 mb-3 font-display text-xl font-semibold">{children}</h3>,
+              p: ({ children }) => <p className="mb-5 leading-relaxed text-foreground/90">{children}</p>,
+              ul: ({ children }) => <ul className="mb-5 list-disc space-y-2 pl-6 leading-relaxed text-foreground/90">{children}</ul>,
+              ol: ({ children }) => <ol className="mb-5 list-decimal space-y-2 pl-6 leading-relaxed text-foreground/90">{children}</ol>,
+              hr: () => <hr className="my-8 border-border" />,
+              table: ({ children }) => <div className="my-6 overflow-x-auto"><table className="w-full min-w-[560px] border-collapse text-sm">{children}</table></div>,
+              th: ({ children }) => <th className="border border-border bg-muted p-3 text-start font-semibold">{children}</th>,
+              td: ({ children }) => <td className="border border-border p-3 align-top">{children}</td>,
+              a: ({ href, children }) => <a href={href} className="underline underline-offset-4" rel="noopener noreferrer">{children}</a>,
+            }}>{block.text}</ReactMarkdown>;
           case "h2":
             return (
               <h2 key={i} id={slugify(block.text)} className="mt-12 mb-4 scroll-mt-24 font-display text-2xl font-extrabold tracking-tight">

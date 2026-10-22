@@ -4,6 +4,8 @@ import { aiErrorForStatus } from "@/lib/ai/errors";
 import { consumeAIStream } from "@/lib/ai/stream";
 import { aiProvider } from "@/lib/ai/provider";
 
+vi.mock("@/lib/posts.functions", () => ({ getPublicPosts: vi.fn().mockResolvedValue([]) }));
+
 afterEach(() => { vi.useRealTimers(); vi.unstubAllGlobals(); });
 
 describe("async catalog adapter", () => {

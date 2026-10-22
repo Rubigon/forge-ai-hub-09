@@ -82,7 +82,11 @@ export function ArticleDetailPage({ article }: { article: Article }) {
     trackEvent("article_view", { slug: article.slug });
   }, [article.slug]);
 
-  const toc = article.content.filter((b) => b.type === "h2");
+  const toc = article.content.flatMap((block) => {
+    if (block.type === "h2") return [{ text: block.text }];
+    if (block.type === "markdown") return [...block.text.matchAll(/^## (.+)$/gm)].map((match) => ({ text: match[1] ?? "" }));
+    return [];
+  });
 
   return (
     <main className="mx-auto max-w-7xl px-6 py-12">
@@ -94,7 +98,7 @@ export function ArticleDetailPage({ article }: { article: Article }) {
         ]}
       />
       <div className="grid gap-12 lg:grid-cols-[1fr_280px]">
-        <article className="max-w-3xl">
+        <article className="min-w-0 max-w-3xl">
           <header className="mb-10">
             <p className="label-mono mb-4 text-muted-foreground">{article.category}</p>
             <h1 className="mb-4 font-display text-4xl leading-tight font-extrabold tracking-tight text-balance">
