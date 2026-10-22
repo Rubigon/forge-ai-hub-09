@@ -2,6 +2,8 @@ import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { tools } from "@/data/tools";
 import { interactiveApps } from "@/data/apps";
 import { articles } from "@/data/articles";
+import { getPublicPosts } from "@/lib/posts.functions";
+import { mergeArticles, postToArticle } from "@/lib/posts";
 
 /** Replace this adapter with HTTP/database reads; UI query contracts remain unchanged. */
 export const catalogService = {
@@ -13,7 +15,9 @@ export const catalogService = {
       signal?.addEventListener("abort", abort, { once: true });
     });
     // Isolated DTOs prevent a consumer from accidentally mutating the source catalog.
-    return structuredClone({ tools, apps: interactiveApps, articles });
+    const posts = await getPublicPosts();
+    if (signal?.aborted) throw new DOMException("Cancelled", "AbortError");
+    return structuredClone({ tools, apps: interactiveApps, articles: mergeArticles(articles, posts.map(postToArticle)) });
   },
 };
 
