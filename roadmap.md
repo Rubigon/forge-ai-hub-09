@@ -15,6 +15,7 @@
 Pendiente (fuera de Prioridad 1): newsletter, prioridades 2 y 3 del documento V3.
 
 # Robustez para el TFM
+- [ ] Insertar el artículo enviado en posts y comprobar su lectura en el blog y sitemap.
 - [x] Servicio asíncrono del catálogo e integración con la interfaz.
 - [x] Prompt Optimizer con IA real y clave exclusivamente en servidor.
 - [x] Errores controlados, cancelación y notificaciones.
