@@ -1,6 +1,7 @@
 /** Configuración global del sitio. Única fuente de verdad para nombre, URLs y copy base. */
 export const site = {
   name: "AIForge",
+  title: "AIForge: Descubre y Compara Herramientas de IA",
   claim: "Descubre, compara y utiliza la inteligencia artificial.",
   description:
     "Descubre herramientas de IA, comparativas, tutoriales y recursos para estudiar, programar, crear contenido y automatizar tareas.",
