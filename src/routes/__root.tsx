@@ -95,16 +95,20 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: `${site.name} | Herramientas, comparativas y recursos de Inteligencia Artificial` },
+      { title: site.title },
       { name: "description", content: site.description },
-      { property: "og:title", content: site.name },
+      { property: "og:title", content: site.title },
       { property: "og:description", content: site.description },
       { property: "og:type", content: "website" },
       { property: "og:site_name", content: site.name },
       { property: "og:locale", content: "es_ES" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "stylesheet", href: appCss }, { rel: "icon", href: "/favicon.ico", type: "image/x-icon" }, ...fontPreconnect],
+    links: [
+      { rel: "stylesheet", href: appCss },
+      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      ...fontPreconnect,
+    ],
     scripts: [
       { type: "application/ld+json", children: JSON.stringify(websiteJsonLd()) },
       { type: "application/ld+json", children: JSON.stringify(organizationJsonLd()) },
