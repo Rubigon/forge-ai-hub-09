@@ -110,6 +110,18 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       ...fontPreconnect,
     ],
     scripts: [
+      {
+        async: true,
+        src: "https://www.googletagmanager.com/gtag/js?id=G-BPHD6BXVH8",
+      },
+      {
+        children: `
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-BPHD6BXVH8');
+        `,
+      },
       { type: "application/ld+json", children: JSON.stringify(websiteJsonLd()) },
       { type: "application/ld+json", children: JSON.stringify(organizationJsonLd()) },
     ],
