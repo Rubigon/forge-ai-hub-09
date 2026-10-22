@@ -15,7 +15,7 @@ export function breadcrumbJsonLd(crumbs: Crumb[]) {
       "@type": "ListItem",
       position: i + 1,
       name: c.name,
-      item: c.url,
+      item: c.url.startsWith("http") ? c.url : `https://www.forge-ai-hub.com${c.url}`,
     })),
   };
 }
