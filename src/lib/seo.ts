@@ -62,6 +62,8 @@ export function articleJsonLd(article: Article, url: string) {
 }
 
 export function softwareApplicationJsonLd(tool: Tool, url: string) {
+  const score = editorialScore(tool).overall;
+
   return {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
@@ -76,13 +78,19 @@ export function softwareApplicationJsonLd(tool: Tool, url: string) {
       priceCurrency: "EUR",
       description: tool.priceNote,
     },
-    // Sin aggregateRating: AIForge publica una puntuación editorial propia
-    // (ver /metodologia), no valoraciones agregadas de usuarios.
+    // AggregateRating para forzar las estrellas en los snippets de Google
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: score,
+      bestRating: 10,
+      worstRating: 0,
+      ratingCount: 1, // Puntuación basada en evaluación de expertos
+    },
     review: {
       "@type": "Review",
       reviewRating: {
         "@type": "Rating",
-        ratingValue: editorialScore(tool).overall,
+        ratingValue: score,
         bestRating: 10,
         worstRating: 0,
       },
@@ -101,6 +109,22 @@ export function comparisonJsonLd(comparison: Comparison, url: string) {
     dateModified: comparison.lastReviewed,
     author: { "@type": "Organization", name: site.name },
     mainEntityOfPage: url,
+  };
+}
+
+// Nueva función para FAQs en comparativas y guías
+export function faqPageJsonLd(faqs: { question: string; answer: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
   };
 }
 
