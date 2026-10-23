@@ -7,6 +7,7 @@ export const site = {
     "Descubre herramientas de IA, comparativas, tutoriales y recursos para estudiar, programar, crear contenido y automatizar tareas.",
   locale: "es-ES",
   author: "Equipo AIForge",
+  url: "https://www.forge-ai-hub.com",
   social: {
     twitter: "@aiforge_es",
     github: "https://github.com",
