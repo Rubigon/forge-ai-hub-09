@@ -6,7 +6,7 @@ import { comparisons } from "@/data/comparisons";
 import { readPublicPosts } from "@/lib/public-posts";
 import { mergeArticles, postToArticle } from "@/lib/posts";
 
-const BASE_URL = "https://forge-ai-hub-09.lovable.app";
+const BASE_URL = "https://www.forge-ai-hub.com";
 const staticPages = ["", "/herramientas", "/comparativas", "/guias", "/tutoriales", "/directorio-ia", "/blog", "/buscar", "/recomendador", "/recursos", "/metodologia", "/nosotros", "/autor", "/precios", "/aviso-legal", "/politica-privacidad", "/politica-cookies", "/terminos", "/contacto"];
 const escapeXml = (text: string) => text.replace(/[<>&'"]/g, (char) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;", "'": "&apos;", '"': "&quot;" })[char] ?? char);
 
