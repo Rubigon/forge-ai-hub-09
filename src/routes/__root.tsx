@@ -109,7 +109,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
       ...fontPreconnect,
     ],
-    scripts: [
+   scripts: [
+      {
+        async: true,
+        src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7130325054342047",
+        crossOrigin: "anonymous",
+      },
       {
         async: true,
         src: "https://www.googletagmanager.com/gtag/js?id=G-BPHD6BXVH8",
