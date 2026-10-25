@@ -1,9 +1,5 @@
 /**
- * Motor determinista del Prompt Optimizer.
- *
- * Reescribe el prompt del usuario: analiza lo que ha escrito y devuelve una
- * versión ejecutable y estructurada con SU contenido (tarea, tema, formato,
- * longitud, idioma, audiencia…), no una plantilla con consejos.
+ * Motor determinista local del Prompt Optimizer.
  */
 
 interface Analysis {
@@ -56,7 +52,7 @@ const STOPWORDS = new Set([
   "algo", "tema", "hola", "puedes", "podrias", "podrías",
 ]);
 
-function clean(text: string) {
+function clean(text: string): string {
   return text.trim().replace(/\s+/g, " ");
 }
 
@@ -66,10 +62,14 @@ function detectTopic(text: string): string {
   if (about?.[2]) return about[2].replace(/[.,;].*$/, "").trim();
   const words = t
     .toLowerCase()
-    .replace(/[^\p{L}\p{N}\s-]/gu, " ")
+    .replace(/[^a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s-]/g, " ")
     .split(/\s+/)
     .filter((w) => w.length > 2 && !STOPWORDS.has(w));
   return words.slice(0, 8).join(" ") || t;
+}
+
+function capitalize(s: string): string {
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 function analyze(raw: string): Analysis {
@@ -115,10 +115,5 @@ export function optimizePrompt(raw: string): string {
   ].join("\n");
 }
 
-function capitalize(s: string) {
-  return s.charAt(0).toUpperCase() + s.slice(1);
-}
-
-// Aliases de seguridad para retrocompatibilidad total con cualquier componente de la app
 export const optimizePromptLocal = optimizePrompt;
 export default optimizePrompt;
