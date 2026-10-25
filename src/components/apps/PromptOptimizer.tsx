@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Check, Copy, LoaderCircle, Sparkles, Square } from "lucide-react";
-import { aiProvider, AIProviderError } from "@/lib/ai/provider";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { trackEvent } from "@/lib/analytics";
+import { optimizePrompt } from "@/lib/prompt-optimizer";
 
 export function PromptOptimizer() {
   const [input, setInput] = useState("");
@@ -19,7 +19,6 @@ export function PromptOptimizer() {
   const remaining = useMemo(() => Math.max(0, 20 - used), [used]);
 
   const optimize = async () => {
-    if (controller.current) return;
     if (input.trim().length < 10) {
       setError("Escribe un prompt de al menos 10 caracteres para poder mejorarlo.");
       return;
@@ -34,20 +33,18 @@ export function PromptOptimizer() {
     setCopied(false);
     setStopped(false);
     setLoading(true);
-    const active = new AbortController();
-    controller.current = active;
+
     try {
-      await aiProvider.complete({
-        messages: [{ role: "user", content: input }], signal: active.signal,
-        onDelta: (text) => setOutput((previous) => (previous ?? "") + text),
-      });
+      // Simulación fluida de generación local (300ms)
+      await new Promise((resolve) => setTimeout(resolve, 300));
+      
+      const result = optimizePrompt(input);
+      setOutput(result);
       setUsed((u) => u + 1);
       trackEvent("prompt_optimizer_used");
     } catch (cause) {
-      if (active.signal.aborted) { setStopped(true); return; }
-      const message = cause instanceof AIProviderError ? cause.message : "El servicio de IA está temporalmente no disponible.";
-      setError(message);
-      toast.error(message);
+      setError("Ocurrió un error al procesar el prompt.");
+      toast.error("Ocurrió un error al procesar el prompt.");
     } finally {
       controller.current = null;
       setLoading(false);
@@ -60,7 +57,9 @@ export function PromptOptimizer() {
       await navigator.clipboard.writeText(output);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    } catch { toast.error("No se pudo copiar. Selecciona el texto y cópialo manualmente."); }
+    } catch {
+      toast.error("No se pudo copiar. Selecciona el texto y cópialo manualmente.");
+    }
   };
 
   return (
@@ -93,7 +92,22 @@ export function PromptOptimizer() {
             {loading ? <LoaderCircle className="size-4 animate-spin" aria-hidden /> : <Sparkles className="size-4" aria-hidden />}
             {loading ? "Optimizando…" : "Optimizar prompt"}
           </Button>
-          {loading && <Button type="button" variant="outline" size="icon" title="Detener" aria-label="Detener" onClick={() => controller.current?.abort()}><Square aria-hidden /></Button>}
+          {loading && (
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              title="Detener"
+              aria-label="Detener"
+              onClick={() => {
+                controller.current?.abort();
+                setLoading(false);
+                setStopped(true);
+              }}
+            >
+              <Square aria-hidden />
+            </Button>
+          )}
           <span className="font-mono text-[11px] text-muted-foreground">{remaining} usos restantes</span>
         </div>
       </div>
@@ -124,11 +138,4 @@ export function PromptOptimizer() {
         ) : (
           <div className="flex min-h-64 items-center justify-center rounded-xl border border-dashed border-border p-6 text-center">
             <p className="max-w-xs text-sm text-muted-foreground">
-              {loading ? "Esperando respuesta…" : "Todavía no hay un prompt optimizado."}
-            </p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-}
+              {loading ? "Esperando respuesta…" : "Todavía
