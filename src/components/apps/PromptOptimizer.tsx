@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useRef, useState } from "react";
-import { Check, Copy, LoaderCircle, Sparkles, Square } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Check, Copy, LoaderCircle, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { trackEvent } from "@/lib/analytics";
@@ -12,9 +12,6 @@ export function PromptOptimizer() {
   const [used, setUsed] = useState(0);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [stopped, setStopped] = useState(false);
-  const controller = useRef<AbortController | null>(null);
-  useEffect(() => () => controller.current?.abort(), []);
 
   const remaining = useMemo(() => Math.max(0, 20 - used), [used]);
 
@@ -23,7 +20,6 @@ export function PromptOptimizer() {
       setError("Escribe un prompt de al menos 10 caracteres para poder mejorarlo.");
       return;
     }
-    // Protección básica contra abuso (cliente): 20 usos por sesión.
     if (remaining <= 0) {
       setError("Has alcanzado el límite de usos de esta sesión. Vuelve a cargar la página más tarde.");
       return;
@@ -31,22 +27,18 @@ export function PromptOptimizer() {
     setError(null);
     setOutput(null);
     setCopied(false);
-    setStopped(false);
     setLoading(true);
 
     try {
-      // Simulación fluida de generación local (300ms)
       await new Promise((resolve) => setTimeout(resolve, 300));
-      
       const result = optimizePrompt(input);
       setOutput(result);
       setUsed((u) => u + 1);
       trackEvent("prompt_optimizer_used");
-    } catch (cause) {
+    } catch {
       setError("Ocurrió un error al procesar el prompt.");
       toast.error("Ocurrió un error al procesar el prompt.");
     } finally {
-      controller.current = null;
       setLoading(false);
     }
   };
@@ -92,22 +84,6 @@ export function PromptOptimizer() {
             {loading ? <LoaderCircle className="size-4 animate-spin" aria-hidden /> : <Sparkles className="size-4" aria-hidden />}
             {loading ? "Optimizando…" : "Optimizar prompt"}
           </Button>
-          {loading && (
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              title="Detener"
-              aria-label="Detener"
-              onClick={() => {
-                controller.current?.abort();
-                setLoading(false);
-                setStopped(true);
-              }}
-            >
-              <Square aria-hidden />
-            </Button>
-          )}
           <span className="font-mono text-[11px] text-muted-foreground">{remaining} usos restantes</span>
         </div>
       </div>
@@ -130,7 +106,6 @@ export function PromptOptimizer() {
           )}
         </div>
         {loading && <p role="status" className="mb-3 text-sm text-muted-foreground">La IA está preparando tu prompt…</p>}
-        {stopped && <p role="status" className="mb-3 text-sm text-muted-foreground">Generación detenida.</p>}
         {output ? (
           <pre className="min-h-64 overflow-x-auto rounded-xl bg-forge p-5 font-mono text-sm leading-relaxed whitespace-pre-wrap text-forge-foreground">
             {output}
@@ -138,4 +113,11 @@ export function PromptOptimizer() {
         ) : (
           <div className="flex min-h-64 items-center justify-center rounded-xl border border-dashed border-border p-6 text-center">
             <p className="max-w-xs text-sm text-muted-foreground">
-              {loading ? "Esperando respuesta…" : "Todavía
+              {loading ? "Esperando respuesta…" : "Todavía no hay un prompt optimizado."}
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
