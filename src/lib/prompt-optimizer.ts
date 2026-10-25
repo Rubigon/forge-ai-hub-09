@@ -51,9 +51,9 @@ const TONE_HINTS: { pattern: RegExp; tone: string }[] = [
 ];
 
 const STOPWORDS = new Set([
-  "hazme","haz","escribeme","escríbeme","escribe","dame","quiero","necesito","por","favor","un","una","unos","unas",
-  "el","la","los","las","de","del","que","para","con","sobre","como","cómo","mi","me","y","o","en","al","es","sea",
-  "algo","tema","hola","puedes","podrias","podrías",
+  "hazme", "haz", "escribeme", "escríbeme", "escribe", "dame", "quiero", "necesito", "por", "favor", "un", "una", "unos", "unas",
+  "el", "la", "los", "las", "de", "del", "que", "para", "con", "sobre", "como", "cómo", "mi", "me", "y", "o", "en", "al", "es", "sea",
+  "algo", "tema", "hola", "puedes", "podrias", "podrías",
 ]);
 
 function clean(text: string) {
@@ -101,30 +101,24 @@ export function optimizePrompt(raw: string): string {
   return [
     `Actúa como ${a.role}.`,
     "",
-    `TAREA
-${capitalize(a.task)}: ${original}`,
+    `TAREA\n${capitalize(a.task)}: ${original}`,
     "",
-    `TEMA / OBJETO
-${capitalize(a.topic)}.`,
+    `TEMA / OBJETO\n${capitalize(a.topic)}.`,
     "",
-    `AUDIENCIA
-Escribe para ${a.audience}. Tono ${a.tone}. Idioma: ${a.language}.`,
+    `AUDIENCIA\nEscribe para ${a.audience}. Tono ${a.tone}. Idioma: ${a.language}.`,
     "",
-    `FORMATO DE SALIDA
-Entrega ${a.format}. Extensión: ${a.length}. Devuelve únicamente el resultado final, sin explicar tu proceso.`,
+    `FORMATO DE SALIDA\nEntrega ${a.format}. Extensión: ${a.length}. Devuelve únicamente el resultado final, sin explicar tu proceso.`,
     "",
-    `RESTRICCIONES
-- No inventes datos, cifras ni fuentes: si falta información, indícalo entre corchetes.
-- Evita frases hechas, relleno y repeticiones.
-- Mantén la coherencia terminológica a lo largo de todo el texto.`,
+    `RESTRICCIONES\n- No inventes datos, cifras ni fuentes: si falta información, indícalo entre corchetes.\n- Evita frases hechas, relleno y repeticiones.\n- Mantén la coherencia terminológica a lo largo de todo el texto.`,
     "",
-    `CRITERIOS DE CALIDAD
-- El resultado debe poder usarse tal cual, sin reescritura.
-- Cada afirmación debe aportar información concreta.
-- Revisa el resultado antes de responder y corrige lo que no cumpla estos criterios.`,
+    `CRITERIOS DE CALIDAD\n- El resultado debe poder usarse tal cual, sin reescritura.\n- Cada afirmación debe aportar información concreta.\n- Revisa el resultado antes de responder y corrige lo que no cumpla estos criterios.`,
   ].join("\n");
 }
 
 function capitalize(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1);
 }
+
+// Aliases de seguridad para retrocompatibilidad total con cualquier componente de la app
+export const optimizePromptLocal = optimizePrompt;
+export default optimizePrompt;
