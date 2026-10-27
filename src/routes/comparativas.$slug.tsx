@@ -9,6 +9,8 @@ import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { ComparisonTable } from "@/components/ComparisonTable";
 import { RelatedContent } from "@/components/RelatedContent";
 
+const BASE_DOMAIN = "https://www.forge-ai-hub.com";
+
 export const Route = createFileRoute("/comparativas/$slug")({
   loader: ({ params }) => {
     if (!comparisonBySlug(params.slug)) throw notFound();
@@ -17,29 +19,32 @@ export const Route = createFileRoute("/comparativas/$slug")({
   head: ({ params }) => {
     const c = comparisonBySlug(params.slug);
     if (!c) {
-      return { meta: [{ title: "Comparativa no encontrada — AIForge" }, { name: "robots", content: "noindex" }] };
+      return { meta: [{ title: "Comparativa no encontrada — Forge AI Hub" }, { name: "robots", content: "noindex" }] };
     }
-    const url = `/comparativas/${c.slug}`;
+    const fullUrl = `${BASE_DOMAIN}/comparativas/${c.slug}`;
+    const title = `${c.title}: ¿Cuál es mejor en 2026? | Forge AI Hub`;
+    const description = `Comparativa detallada: ${c.title}. Analizamos diferencias clave, precio, rendimiento y características para ayudarte a elegir.`;
+
     return {
       meta: [
-        { title: `${c.title} — AIForge` },
-        { name: "description", content: c.summary.slice(0, 155) },
-        { property: "og:title", content: c.title },
-        { property: "og:description", content: c.summary.slice(0, 200) },
+        { title },
+        { name: "description", content: description.slice(0, 155) },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description.slice(0, 155) },
         { property: "og:type", content: "article" },
-        { property: "og:url", content: url },
-        { name: "twitter:card", content: "summary" },
+        { property: "og:url", content: fullUrl },
+        { name: "twitter:card", content: "summary_large_image" },
       ],
-      links: [{ rel: "canonical", href: url }],
+      links: [{ rel: "canonical", href: fullUrl }],
       scripts: [
-        { type: "application/ld+json", children: JSON.stringify(comparisonJsonLd(c, url)) },
+        { type: "application/ld+json", children: JSON.stringify(comparisonJsonLd(c, fullUrl)) },
         {
           type: "application/ld+json",
           children: JSON.stringify(
             breadcrumbJsonLd([
-              { name: "Inicio", url: "/" },
-              { name: "Comparativas", url: "/comparativas" },
-              { name: c.title, url },
+              { name: "Inicio", url: `${BASE_DOMAIN}/` },
+              { name: "Comparativas", url: `${BASE_DOMAIN}/comparativas` },
+              { name: c.title, url: fullUrl },
             ]),
           ),
         },
