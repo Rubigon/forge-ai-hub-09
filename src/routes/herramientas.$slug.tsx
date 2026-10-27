@@ -25,6 +25,8 @@ import { difficultyLabel } from "@/lib/scoring";
 import { audienceFor, hasApi, sourcesFor } from "@/data/tool-facts";
 import type { Tool } from "@/types";
 
+const BASE_DOMAIN = "https://www.forge-ai-hub.com";
+
 const appComponents: Record<string, () => React.JSX.Element> = {
   "optimizador-prompts": PromptOptimizer,
   "calculadora-costes-ia": CostCalculator,
@@ -46,44 +48,53 @@ export const Route = createFileRoute("/herramientas/$slug")({
   head: ({ params }) => {
     const app = appBySlug(params.slug);
     const tool = toolBySlug(params.slug);
-    const url = `/herramientas/${params.slug}`;
+    const path = `/herramientas/${params.slug}`;
+    const fullUrl = `${BASE_DOMAIN}${path}`;
+
     if (app) {
+      const title = `${app.name} Gratis Online — Forge AI Hub`;
       return {
         meta: [
-          { title: `${app.name} gratis online — AIForge` },
+          { title },
           { name: "description", content: app.description },
-          { property: "og:title", content: `${app.name} — AIForge` },
+          { property: "og:title", content: title },
           { property: "og:description", content: app.description },
           { property: "og:type", content: "website" },
-          { property: "og:url", content: url },
+          { property: "og:url", content: fullUrl },
           { name: "twitter:card", content: "summary" },
         ],
-        links: [{ rel: "canonical", href: url }],
+        links: [{ rel: "canonical", href: fullUrl }],
       };
     }
+
     if (!tool) {
-      return { meta: [{ title: "Herramienta no encontrada — AIForge" }, { name: "robots", content: "noindex" }] };
+      return { meta: [{ title: "Herramienta no encontrada — Forge AI Hub" }, { name: "robots", content: "noindex" }] };
     }
+
+    // Títulos y meta descripciones optimizadas para posicionamiento orgánico
+    const title = `${tool.name}: Opiniones, Precios y Alternativas (2026) | Forge AI Hub`;
+    const description = `Análisis detallado de ${tool.name}. Descubre sus características clave, plan de precio (${pricingLabels[tool.pricing]}), pros, contras y mejores alternativas de IA.`;
+
     return {
       meta: [
-        { title: `${tool.name}: análisis, precios y alternativas — AIForge` },
-        { name: "description", content: tool.description.slice(0, 155) },
-        { property: "og:title", content: `${tool.name} — análisis y precios` },
+        { title },
+        { name: "description", content: description.slice(0, 155) },
+        { property: "og:title", content: title },
         { property: "og:description", content: tool.tagline },
         { property: "og:type", content: "article" },
-        { property: "og:url", content: url },
+        { property: "og:url", content: fullUrl },
         { name: "twitter:card", content: "summary" },
       ],
-      links: [{ rel: "canonical", href: url }],
+      links: [{ rel: "canonical", href: fullUrl }],
       scripts: [
-        { type: "application/ld+json", children: JSON.stringify(softwareApplicationJsonLd(tool, url)) },
+        { type: "application/ld+json", children: JSON.stringify(softwareApplicationJsonLd(tool, fullUrl)) },
         {
           type: "application/ld+json",
           children: JSON.stringify(
             breadcrumbJsonLd([
-              { name: "Inicio", url: "/" },
-              { name: "Herramientas", url: "/herramientas" },
-              { name: tool.name, url },
+              { name: "Inicio", url: `${BASE_DOMAIN}/` },
+              { name: "Herramientas", url: `${BASE_DOMAIN}/herramientas` },
+              { name: tool.name, url: fullUrl },
             ]),
           ),
         },
