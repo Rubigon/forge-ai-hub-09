@@ -50,7 +50,7 @@ export function Footer() {
         <div className="mb-20 grid grid-cols-2 gap-12 md:grid-cols-6">
           <div className="col-span-2">
             <p className="mb-6 font-display text-xl font-extrabold tracking-tighter">
-              AI<span className="text-muted-foreground">FORGE</span>
+              FORGE<span className="text-muted-foreground"> AI HUB</span>
             </p>
             <p className="mb-4 max-w-xs text-sm text-muted-foreground">{t("home.sub")}</p>
             <p className="max-w-xs text-xs text-muted-foreground/70">{t("notice.partialTranslation")}</p>
@@ -72,7 +72,7 @@ export function Footer() {
         </div>
         <div className="flex flex-col items-center justify-between gap-4 border-t border-border pt-10 md:flex-row">
           <p className="font-mono text-xs text-muted-foreground">
-            © {new Date().getFullYear()} {site.name.toUpperCase()} — MADRID, ES.
+            © {new Date().getFullYear()} FORGE AI HUB — SPAIN.
           </p>
           <div className="flex items-center gap-2">
             <span className="size-2 rounded-full bg-success" aria-hidden />
