@@ -13,20 +13,59 @@ import { site } from "@/config/site";
 import { useI18n } from "@/lib/i18n";
 import { translateCategoryName, translateTagline } from "@/i18n/content";
 
+const BASE_DOMAIN = "https://www.forge-ai-hub.com";
+
 export const Route = createFileRoute("/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(catalogQueryOptions()),
-  head: () => ({
-    meta: [
-      { title: `${site.name} | Herramientas, comparativas y recursos de Inteligencia Artificial` },
-      { name: "description", content: site.description },
-      { property: "og:title", content: `${site.name} | Herramientas y recursos de IA` },
-      { property: "og:description", content: site.description },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { property: "og:url", content: "/" },
-    ],
-    links: [{ rel: "canonical", href: "/" }],
-  }),
+  head: () => {
+    const fullUrl = `${BASE_DOMAIN}/`;
+    const title = `${site.name} | Directorio de Herramientas de IA y Comparativas (2026)`;
+    const description = site.description;
+
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: fullUrl },
+        { property: "og:image", content: `${BASE_DOMAIN}/icon-512.png` },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+      links: [{ rel: "canonical", href: fullUrl }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify({
+            "@context": "https://schema.org",
+            "@graph": [
+              {
+                "@type": "WebSite",
+                "@id": `${BASE_DOMAIN}/#website`,
+                "url": BASE_DOMAIN,
+                "name": site.name,
+                "description": description,
+                "inLanguage": "es",
+                "potentialAction": {
+                  "@type": "SearchAction",
+                  "target": `${BASE_DOMAIN}/buscar?q={search_term_string}`,
+                  "query-input": "required name=search_term_string",
+                },
+              },
+              {
+                "@type": "Organization",
+                "@id": `${BASE_DOMAIN}/#organization`,
+                "name": site.name,
+                "url": BASE_DOMAIN,
+                "logo": `${BASE_DOMAIN}/icon-512.png`,
+              },
+            ],
+          }),
+        },
+      ],
+    };
+  },
   component: HomePage,
 });
 
