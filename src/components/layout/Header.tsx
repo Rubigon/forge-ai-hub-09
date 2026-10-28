@@ -12,8 +12,9 @@ export function Header() {
   const { theme, toggle } = useTheme();
   const { t } = useI18n();
 
-  const openSearch = () =>
+  const openSearch = () => {
     window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true }));
+  };
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
@@ -24,8 +25,8 @@ export function Header() {
             className="flex items-center gap-2 font-display text-xl font-extrabold tracking-tighter"
             aria-label={site.name}
           >
-            <span className="rounded-sm bg-primary px-1.5 py-0.5 text-primary-foreground">AI</span>
-            <span>FORGE</span>
+            <span className="rounded-sm bg-primary px-1.5 py-0.5 text-primary-foreground">FORGE</span>
+            <span>AI HUB</span>
           </Link>
           <nav className="hidden gap-6 text-[13px] font-medium text-muted-foreground md:flex" aria-label={site.name}>
             {mainNav.map((item) => (
@@ -40,74 +41,56 @@ export function Header() {
             ))}
           </nav>
         </div>
+
         <div className="flex items-center gap-2">
           <button
             type="button"
             onClick={openSearch}
-            className="hidden items-center gap-2 rounded-full border border-border px-3 py-1.5 font-mono text-xs text-muted-foreground transition-colors hover:text-foreground sm:flex"
+            className="flex items-center gap-3 rounded-lg border border-border bg-card px-3 py-1.5 text-xs text-muted-foreground transition-colors hover:border-foreground/20"
             aria-label={t("action.searchAria")}
           >
             <Search className="size-3.5" aria-hidden />
-            <span>⌘K</span>
+            <span className="hidden sm:inline">{t("home.searchPlaceholder")}</span>
+            <kbd className="hidden rounded bg-muted px-1.5 py-0.5 font-mono text-[10px] sm:inline">⌘K</kbd>
           </button>
+
+          <LanguageSwitcher />
+
           <button
             type="button"
             onClick={toggle}
-            className="rounded-full border border-border p-2 text-muted-foreground transition-colors hover:text-foreground"
-            aria-label={theme === "dark" ? t("theme.toLight") : t("theme.toDark")}
+            className="flex size-9 items-center justify-center rounded-lg border border-border bg-card transition-colors hover:border-foreground/20"
+            aria-label={t("action.toggleTheme")}
           >
-            {theme === "dark" ? <Sun className="size-4" aria-hidden /> : <Moon className="size-4" aria-hidden />}
+            {theme === "dark" ? <Sun className="size-4" /> : <Moon className="size-4" />}
           </button>
-          <LanguageSwitcher />
-          <Link
-            to="/recomendador"
-            className="hidden rounded-full bg-primary px-4 py-2 text-[13px] font-medium text-primary-foreground shadow-sm transition-opacity hover:opacity-90 lg:block"
-          >
-            {t("cta.findAI")}
-          </Link>
+
           <button
             type="button"
-            className="rounded-md p-2 text-muted-foreground md:hidden"
-            onClick={() => setOpen((v) => !v)}
-            aria-expanded={open}
-            aria-label={open ? t("menu.close") : t("menu.open")}
+            onClick={() => setOpen(!open)}
+            className="flex size-9 items-center justify-center rounded-lg border border-border bg-card md:hidden"
+            aria-label={t("action.menuAria")}
           >
-            {open ? <X className="size-5" aria-hidden /> : <Menu className="size-5" aria-hidden />}
+            {open ? <X className="size-4" /> : <Menu className="size-4" />}
           </button>
         </div>
       </div>
+
       {open && (
-        <nav className="border-t border-border bg-background px-6 py-4 md:hidden" aria-label={site.name}>
-          <ul className="space-y-3 text-sm font-medium">
+        <nav className="border-b border-border bg-background px-6 py-4 md:hidden">
+          <div className="flex flex-col gap-3 text-sm">
             {mainNav.map((item) => (
-              <li key={item.to}>
-                <Link to={item.to} onClick={() => setOpen(false)} className="block py-1">
-                  {t(item.key as MessageKey)}
-                </Link>
-              </li>
-            ))}
-            <li>
-              <button
-                type="button"
-                className="flex items-center gap-2 py-1 text-muted-foreground"
-                onClick={() => {
-                  setOpen(false);
-                  openSearch();
-                }}
-              >
-                <Search className="size-4" aria-hidden /> {t("action.search")}
-              </button>
-            </li>
-            <li>
               <Link
-                to="/recomendador"
+                key={item.to}
+                to={item.to}
                 onClick={() => setOpen(false)}
-                className="mt-2 block rounded-lg bg-primary px-4 py-2 text-center text-primary-foreground"
+                className="py-1 text-muted-foreground transition-colors hover:text-foreground"
+                activeProps={{ className: "font-semibold text-foreground" }}
               >
-                {t("cta.findAI")}
+                {t(item.key as MessageKey)}
               </Link>
-            </li>
-          </ul>
+            ))}
+          </div>
         </nav>
       )}
     </header>
