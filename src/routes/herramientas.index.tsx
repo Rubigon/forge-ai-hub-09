@@ -3,38 +3,40 @@ import { ToolsCategoryPage } from "@/components/ToolsCategoryPage";
 import { breadcrumbJsonLd } from "@/lib/seo";
 import { catalogQueryOptions } from "@/lib/catalog";
 
+const BASE_DOMAIN = "https://www.forge-ai-hub.com";
+
 export const Route = createFileRoute("/herramientas/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(catalogQueryOptions()),
-  head: () => ({
-    meta: [
-      { title: "Herramientas de IA analizadas y utilidades gratuitas — AIForge" },
-      {
-        name: "description",
-        content:
-          "Catálogo de herramientas de inteligencia artificial con fichas técnicas, precios y casos de uso, más utilidades interactivas gratuitas de AIForge.",
-      },
-      { property: "og:title", content: "Herramientas de IA — AIForge" },
-      {
-        property: "og:description",
-        content: "Fichas técnicas de herramientas de IA y utilidades interactivas gratuitas.",
-      },
-      { property: "og:type", content: "website" },
-      { property: "og:url", content: "/herramientas" },
-      { name: "twitter:card", content: "summary" },
-    ],
-    links: [{ rel: "canonical", href: "/herramientas" }],
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify(
-          breadcrumbJsonLd([
-            { name: "Inicio", url: "/" },
-            { name: "Herramientas", url: "/herramientas" },
-          ]),
-        ),
-      },
-    ],
-  }),
+  head: () => {
+    const fullUrl = `${BASE_DOMAIN}/herramientas`;
+    const title = "Directorio de Herramientas de IA (2026) | Forge AI Hub";
+    const description = "Catálogo completo de herramientas de Inteligencia Artificial con fichas técnicas, precios, opiniones y casos de uso en Forge AI Hub.";
+
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: fullUrl },
+        { property: "og:image", content: `${BASE_DOMAIN}/icon-512.png` },
+        { name: "twitter:card", content: "summary_large_image" },
+      ],
+      links: [{ rel: "canonical", href: fullUrl }],
+      scripts: [
+        {
+          type: "application/ld+json",
+          children: JSON.stringify(
+            breadcrumbJsonLd([
+              { name: "Inicio", url: `${BASE_DOMAIN}/` },
+              { name: "Herramientas", url: fullUrl },
+            ]),
+          ),
+        },
+      ],
+    };
+  },
   component: HerramientasIndex,
 });
 
