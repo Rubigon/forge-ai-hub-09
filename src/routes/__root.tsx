@@ -176,3 +176,12 @@ function RootComponent() {
               <Outlet />
             </div>
             <Footer />
+          </div>
+          <SearchDialog />
+          <CookieConsent />
+          <Toaster position="bottom-right" />
+        </I18nProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
+}
