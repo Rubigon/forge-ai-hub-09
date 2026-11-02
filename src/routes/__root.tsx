@@ -110,11 +110,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "icon", href: "/favicon-48x48.png", type: "image/png", sizes: "48x48" },
       { rel: "icon", href: "/favicon-96x96.png", type: "image/png", sizes: "96x96" },
-      { rel: "icon", href: "/icon-192.png", type: "image/png", sizes: "192x192" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png", sizes: "180x180" },
+      { rel: "icon", href: "/apple-touch-icon.png", sizes: "180x180" },
       ...fontPreconnect,
     ],
-   scripts: [
+    scripts: [
       {
         async: true,
         src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7130325054342047",
@@ -172,16 +171,8 @@ function RootComponent() {
               Saltar al contenido
             </a>
             <Header />
-            <div id="contenido" className="flex-1">
+            {/* Contenedor principal adaptado con padding responsive (px-4 en móvil, px-6 en tablets, px-8 en PC) */}
+            <div id="contenido" className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
               <Outlet />
             </div>
             <Footer />
-          </div>
-          <SearchDialog />
-          <CookieConsent />
-          <Toaster position="bottom-right" />
-        </I18nProvider>
-      </ThemeProvider>
-    </QueryClientProvider>
-  );
-}
