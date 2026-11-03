@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
 import { messages, type MessageKey } from "@/i18n/ui";
 
-export type Locale = "es" | "en" | "pt" | "ja" | "zh" | "hi" | "ar" | "fr" | "de" | "ru";
+export type Locale = "es" | "en" | "nl" | "pt" | "ja" | "zh" | "hi" | "ar" | "fr" | "de" | "ru";
 
 export interface LocaleMeta {
   code: Locale;
@@ -11,10 +11,11 @@ export interface LocaleMeta {
   htmlLang: string;
 }
 
-/** Las 10 lenguas soportadas. Español, inglés, portugués y japonés son fijos. */
+/** Umi ñe'ẽ oñemotenondéva. Oñemoinge ko'ág̃a pe Holandés (nl). */
 export const LOCALES: LocaleMeta[] = [
   { code: "es", label: "Español", flag: "🇪🇸", dir: "ltr", htmlLang: "es" },
   { code: "en", label: "English", flag: "🇬🇧", dir: "ltr", htmlLang: "en" },
+  { code: "nl", label: "Nederlands", flag: "🇳🇱", dir: "ltr", htmlLang: "nl" },
   { code: "pt", label: "Português", flag: "🇵🇹", dir: "ltr", htmlLang: "pt" },
   { code: "ja", label: "日本語", flag: "🇯🇵", dir: "ltr", htmlLang: "ja" },
   { code: "zh", label: "中文", flag: "🇨🇳", dir: "ltr", htmlLang: "zh" },
@@ -30,18 +31,19 @@ const STORAGE_KEY = "aiforge-lang";
 
 const codes = new Set(LOCALES.map((l) => l.code));
 
-/** Mapea región → idioma para visitantes cuyo navegador no coincide con los soportados. */
+/** Ohechauka tetã térã región → ñe'ẽ oñembohape hag̃ua. */
 const REGION_TO_LOCALE: Record<string, Locale> = {
   ES: "es", MX: "es", AR: "es", CO: "es", CL: "es", PE: "es", VE: "es", UY: "es", EC: "es",
+  NL: "nl", BE: "nl", SR: "nl", // Oñemoinge Países Bajos (NL) ha Bélgica (BE) ñe'ẽ holandés
   BR: "pt", PT: "pt", AO: "pt",
   JP: "ja", CN: "zh", TW: "zh", HK: "zh", SG: "zh",
   IN: "hi", SA: "ar", AE: "ar", EG: "ar", MA: "ar", QA: "ar", DZ: "ar",
-  FR: "fr", BE: "fr", CA: "fr", CH: "de", DE: "de", AT: "de",
+  FR: "fr", CA: "fr", CH: "de", DE: "de", AT: "de",
   RU: "ru", BY: "ru", KZ: "ru",
   US: "en", GB: "en", IE: "en", AU: "en", NZ: "en",
 };
 
-/** Detecta el idioma del visitante a partir del navegador y, si falla, de su zona horaria. */
+/** Ohecha ñe'ẽ ojepuru navegador rupive térã zona horaria rupive. */
 export function detectLocale(): Locale {
   if (typeof navigator === "undefined") return DEFAULT_LOCALE;
   const candidates = [...(navigator.languages ?? []), navigator.language].filter(Boolean);
@@ -52,6 +54,7 @@ export function detectLocale(): Locale {
   }
   try {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone ?? "";
+    if (/Amsterdam|Brussels/.test(tz)) return "nl"; // Zona horaria Países Bajos / Bélgica
     if (/Tokyo/.test(tz)) return "ja";
     if (/Shanghai|Hong_Kong|Taipei/.test(tz)) return "zh";
     if (/Kolkata|Calcutta/.test(tz)) return "hi";
