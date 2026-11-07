@@ -119,6 +119,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         src: "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7130325054342047",
         crossOrigin: "anonymous",
       },
+      // Google Tag Manager Script principal
+      {
+        children: `
+          (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-M6GMDNPL');
+        `,
+      },
+      // Google Analytics 4 (GA4)
       {
         async: true,
         src: "https://www.googletagmanager.com/gtag/js?id=G-BPHD6BXVH8",
@@ -149,6 +160,15 @@ function RootShell({ children }: { children: ReactNode }) {
         <HeadContent />
       </head>
       <body>
+        {/* Google Tag Manager (noscript fallback) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-M6GMDNPL"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         {children}
         <Scripts />
       </body>
@@ -171,7 +191,6 @@ function RootComponent() {
               Saltar al contenido
             </a>
             <Header />
-            {/* Contenedor principal adaptado con padding responsive (px-4 en móvil, px-6 en tablets, px-8 en PC) */}
             <div id="contenido" className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
               <Outlet />
             </div>
